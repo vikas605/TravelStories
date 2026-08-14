@@ -1,7 +1,7 @@
-require("dotenv").config();
+
+require("dotenv").config({ override: true });
 
 const sql = require("mssql");
-
 const config = {
     server: process.env.DB_SERVER,
     database: process.env.DB_DATABASE,
@@ -36,7 +36,6 @@ async function connectDatabase() {
         return pool;
 
     } catch (error) {
-
         console.error("SQL Server connection failed:");
         console.error(error.message);
 
@@ -45,30 +44,29 @@ async function connectDatabase() {
 }
 
 async function initializeDatabase() {
-
     const db = await connectDatabase();
 
-    const query = `
-        IF NOT EXISTS (
-            SELECT 1
-            FROM sys.tables
-            WHERE name = 'Stories'
-        )
-        BEGIN
-            CREATE TABLE Stories (
-                Id BIGINT PRIMARY KEY,
-                Title NVARCHAR(300) NOT NULL,
-                StartPlace NVARCHAR(200) NOT NULL,
-                Destination NVARCHAR(200) NOT NULL,
-                Transport NVARCHAR(200) NOT NULL,
-                Cost DECIMAL(10,2) NOT NULL,
-                Route NVARCHAR(MAX) NOT NULL,
-                Experience NVARCHAR(MAX) NOT NULL,
-                Tips NVARCHAR(MAX) NULL,
-                CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE()
-            );
-        END
-    `;
+    const query = [
+        "IF NOT EXISTS (",
+        "    SELECT 1",
+        "    FROM sys.tables",
+        "    WHERE name = 'Stories'",
+        ")",
+        "BEGIN",
+        "    CREATE TABLE Stories (",
+        "        Id BIGINT PRIMARY KEY,",
+        "        Title NVARCHAR(300) NOT NULL,",
+        "        StartPlace NVARCHAR(200) NOT NULL,",
+        "        Destination NVARCHAR(200) NOT NULL,",
+        "        Transport NVARCHAR(200) NOT NULL,",
+        "        Cost DECIMAL(10,2) NOT NULL,",
+        "        Route NVARCHAR(MAX) NOT NULL,",
+        "        Experience NVARCHAR(MAX) NOT NULL,",
+        "        Tips NVARCHAR(MAX) NULL,",
+        "        CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE()",
+        "    );",
+        "END"
+    ].join("\n");
 
     await db.request().query(query);
 
@@ -81,3 +79,4 @@ module.exports = {
     connectDatabase,
     initializeDatabase
 };
+
