@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Travel Story — TravelStories</title>
+
+    <meta
+        name="description"
+        content="Read a real travel experience on TravelStories."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================================
+           STORY PAGE
+        ========================================= */
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(79, 70, 229, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 25%,
+                    rgba(14, 165, 233, 0.15),
+                    transparent 30%
+                ),
+                #070a12;
+            color: #f8fafc;
+            font-family: "DM Sans", sans-serif;
+        }
+
+
+        .story-page {
+            width: min(1180px, 92%);
+            margin: auto;
+            padding-bottom: 100px;
+        }
+
+
+        /* =========================================
+           NAVBAR
+        ========================================= */
+
+        .story-navbar {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .story-logo {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .story-logo-icon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,.08);
+            box-shadow:
+                inset 0 1px 1px rgba(255,255,255,.15),
+                0 10px 30px rgba(0,0,0,.3);
+        }
+
+
+        .back-button {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 14px;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.08);
+            transition: .3s;
+        }
+
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,.1);
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .story-hero {
+            position: relative;
+            min-height: 480px;
+            border-radius: 36px;
+            overflow: hidden;
+            padding: 70px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(30,41,59,.95),
+                    rgba(15,23,42,.82)
+                );
+            border: 1px solid rgba(255,255,255,.1);
+            box-shadow:
+                0 40px 100px rgba(0,0,0,.45),
+                inset 0 1px 1px rgba(255,255,255,.12);
+            transform-style: preserve-3d;
+        }
+
+
+        .hero-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            right: -100px;
+            top: -120px;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(56,189,248,.28),
+                    transparent 65%
+                );
+            filter: blur(10px);
+        }
+
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+
+
+        .story-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 15px;
+            border-radius: 50px;
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.1);
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+
+        .story-hero h1 {
+            margin: 25px 0 18px;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(42px, 6vw, 76px);
+            line-height: 1.02;
+            letter-spacing: -2px;
+        }
+
+
+        .story-hero h1 span {
+            display: block;
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #7dd3fc
+                );
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+
+        .story-subtitle {
+            color: #94a3b8;
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 650px;
+        }
+
+
+        /* =========================================
+           FLOATING 3D CARD
+        ========================================= */
+
+        .floating-globe {
+            position: absolute;
+            right: 90px;
+            bottom: 65px;
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 105px;
+            background:
+                radial-gradient(
+                    circle at 35% 25%,
+                    rgba(255,255,255,.25),
+                    rgba(255,255,255,.03) 55%
+                );
+            box-shadow:
+                0 35px 70px rgba(0,0,0,.5),
+                inset -15px -15px 30px rgba(0,0,0,.25),
+                inset 10px 10px 25px rgba(255,255,255,.1);
+            animation: floatGlobe 5s ease-in-out infinite;
+        }
+
+
+        @keyframes floatGlobe {
+
+            0%,100% {
+                transform: translateY(0) rotate(-3deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(3deg);
+            }
+
+        }
+
+
+        /* =========================================
+           TRIP STATS
+        ========================================= */
+
+        .trip-stats {
+            margin-top: -45px;
+            position: relative;
+            z-index: 5;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+
+        .stat-card {
+            padding: 25px;
+            border-radius: 22px;
+            background: rgba(15,23,42,.88);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,.09);
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.3);
+        }
+
+
+        .stat-icon {
+            font-size: 25px;
+        }
+
+
+        .stat-label {
+            display: block;
+            margin-top: 12px;
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+
+        .stat-value {
+            display: block;
+            margin-top: 5px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           MAIN CONTENT
+        ========================================= */
+
+        .story-layout {
+            margin-top: 80px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 70px;
+        }
+
+
+        .story-sidebar {
+            position: sticky;
+            top: 30px;
+            align-self: start;
+        }
+
+
+        .side-title {
+            color: #64748b;
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+
+        .side-link {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 10px 0;
+            transition: .2s;
+        }
+
+
+        .side-link:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+
+        /* =========================================
+           ROUTE
+        ========================================= */
+
+        .route-box {
+            padding: 35px;
+            border-radius: 28px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(30,41,59,.8),
+                    rgba(15,23,42,.65)
+                );
+            border: 1px solid rgba(255,255,255,.08);
+            box-shadow: 0 25px 60px rgba(0,0,0,.25);
+        }
+
+
+        .content-title {
+            font-family: "Playfair Display", serif;
+            font-size: 34px;
+            margin: 0 0 25px;
+        }
+
+
+        .route-line {
+            position: relative;
+            padding-left: 38px;
+        }
+
+
+        .route-line::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background:
+                linear-gradient(
+                    #38bdf8,
+                    #818cf8
+                );
+        }
+
+
+        .route-step {
+            position: relative;
+            padding: 8px 0 25px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+
+        .route-step::before {
+            content: "📍";
+            position: absolute;
+            left: -38px;
+            top: 4px;
+            width: 22px;
+            height: 22px;
+            font-size: 15px;
+        }
+
+
+        /* =========================================
+           STORY ARTICLE
+        ========================================= */
+
+        .article {
+            margin-top: 60px;
+        }
+
+
+        .article p {
+            color: #cbd5e1;
+            font-size: 18px;
+            line-height: 2;
+            margin: 0 0 28px;
+        }
+
+
+        .article .lead {
+            font-family: "Playfair Display", serif;
+            font-size: 27px;
+            line-height: 1.7;
+            color: #f8fafc;
+        }
+
+
+        .article-heading {
+            margin-top: 60px;
+            margin-bottom: 25px;
+            font-family: "Playfair Display", serif;
+            font-size: 36px;
+        }
+
+
+        /* =========================================
+           TIPS
+        ========================================= */
+
+        .tips-box {
+            margin-top: 65px;
+            padding: 35px;
+            border-radius: 28px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(30,41,59,.95),
+                    rgba(15,23,42,.75)
+                );
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+
+        .tip {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            color: #cbd5e1;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            line-height: 1.6;
+        }
+
+
+        .tip:last-child {
+            border-bottom: 0;
+        }
+
+
+        .tip-icon {
+            font-size: 20px;
+        }
+
+
+        /* =========================================
+           END CTA
+        ========================================= */
+
+        .story-end {
+            margin-top: 80px;
+            text-align: center;
+            padding: 60px 30px;
+            border-radius: 35px;
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(56,189,248,.12),
+                    transparent 60%
+                ),
+                rgba(15,23,42,.7);
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+
+        .story-end h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 40px;
+        }
+
+
+        .story-end p {
+            color: #94a3b8;
+            max-width: 600px;
+            margin: auto;
+            line-height: 1.8;
+        }
+
+
+        .share-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 15px 24px;
+            border-radius: 15px;
+            background: white;
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: 700;
+            transition: .3s;
+        }
+
+
+        .share-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(255,255,255,.15);
+        }
+
+
+        /* =========================================
+           LOADING
+        ========================================= */
+
+        .loading {
+            text-align: center;
+            padding: 150px 20px;
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .story-hero {
+                padding: 40px 25px;
+            }
+
+
+            .floating-globe {
+                opacity: .25;
+                right: -20px;
+                bottom: 10px;
+            }
+
+
+            .trip-stats {
+                grid-template-columns: 1fr;
+                margin-top: 20px;
+            }
+
+
+            .story-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin-top: 50px;
+            }
+
+
+            .story-sidebar {
+                position: static;
+            }
+
+
+            .story-hero h1 {
+                font-size: 46px;
+            }
+
+
+            .article p {
+                font-size: 17px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="story-page">
+
+
+    <!-- NAVBAR -->
+
+    <header class="story-navbar">
+
+        <a
+            href="index.html"
+            class="story-logo"
+        >
+
+            <span class="story-logo-icon">
+                ✦
+            </span>
+
+            TravelStories
+
+        </a>
+
+
+        <a
+            href="index.html#stories"
+            class="back-button"
+        >
+            ← Back to Stories
+        </a>
+
+    </header>
+
+
+
+    <!-- STORY WILL LOAD HERE -->
+
+    <div id="storyPage">
+
+        <div class="loading">
+            🌍 Loading your journey...
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+const API_URL =
+    "http://localhost:5000/api/stories";
+
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const storyId =
+    params.get("id");
+
+
+const storyPage =
+    document.getElementById(
+        "storyPage"
+    );
+
+
+
+function escapeHTML(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+    return String(value)
+
+        .replaceAll("&", "&amp;")
+
+        .replaceAll("<", "&lt;")
+
+        .replaceAll(">", "&gt;")
+
+        .replaceAll('"', "&quot;")
+
+        .replaceAll("'", "&#039;");
+}
+
+
+
+function createRoute(route) {
+
+    const lines =
+        String(route || "")
+            .split("\n")
+            .filter(line => line.trim());
+
+
+    return lines.map(line => {
+
+        if (line.trim() === "↓") {
+            return "";
+        }
+
+        return `
+            <div class="route-step">
+                ${escapeHTML(line)}
+            </div>
+        `;
+
+    }).join("");
+
+}
+
+
+
+function createExperience(text) {
+
+    return String(text || "")
+        .split(/\n\s*\n/)
+        .filter(Boolean)
+        .map((paragraph, index) => {
+
+            return `
+                <p class="${index === 0 ? "lead" : ""}">
+                    ${escapeHTML(paragraph)}
+                </p>
+            `;
+
+        })
+        .join("");
+
+}
+
+
+
+function createTips(text) {
+
+    const tips =
+        String(text || "")
+            .split("\n")
+            .map(tip => tip
+                .replace(/^•\s*/, "")
+                .trim()
+            )
+            .filter(Boolean);
+
+
+    return tips.map(tip => {
+
+        return `
+            <div class="tip">
+
+                <span class="tip-icon">
+                    💡
+                </span>
+
+                <span>
+                    ${escapeHTML(tip)}
+                </span>
+
+            </div>
+        `;
+
+    }).join("");
+
+}
+
+
+
+async function loadStory() {
+
+    if (!storyId) {
+
+        storyPage.innerHTML = `
+            <div class="loading">
+                ❌ Story not found.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL + "/" + encodeURIComponent(storyId)
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Story could not be loaded."
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        const story =
+            result.story;
+
+
+        document.title =
+            story.title +
+            " — TravelStories";
+
+
+        storyPage.innerHTML = `
+
+            <section class="story-hero">
+
+                <div class="hero-glow"></div>
+
+                <div class="hero-content">
+
+                    <div class="story-category">
+                        🌍 REAL TRAVEL EXPERIENCE
+                    </div>
+
+
+                    <h1>
+
+                        ${escapeHTML(
+                            story.start
+                        )}
+
+                        <span>
+                            →
+                            ${escapeHTML(
+                                story.destination
+                            )}
+                        </span>
+
+                    </h1>
+
+
+                    <p class="story-subtitle">
+
+                        ${escapeHTML(
+                            story.title
+                        )}
+
+                    </p>
+
+                </div>
+
+
+                <div class="floating-globe">
+                    🌍
+                </div>
+
+            </section>
+
+
+
+            <section class="trip-stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🚌
+                    </div>
+
+                    <span class="stat-label">
+                        Transport
+                    </span>
+
+                    <span class="stat-value">
+                        ${escapeHTML(
+                            story.transport
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        💰
+                    </div>
+
+                    <span class="stat-label">
+                        Travel Cost
+                    </span>
+
+                    <span class="stat-value">
+                        ₹${Number(
+                            story.cost
+                        ).toLocaleString("en-IN")}
+                    </span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📅
+                    </div>
+
+                    <span class="stat-label">
+                        Shared
+                    </span>
+
+                    <span class="stat-value">
+                        ${new Date(
+                            story.createdAt
+                        ).toLocaleDateString(
+                            "en-IN",
+                            {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric"
+                            }
+                        )}
+                    </span>
+
+                </div>
+
+            </section>
+
+
+
+            <section class="story-layout">
+
+
+                <aside class="story-sidebar">
+
+                    <div class="side-title">
+                        THIS JOURNEY
+                    </div>
+
+                    <a
+                        href="#route"
+                        class="side-link"
+                    >
+                        🗺️ Route
+                    </a>
+
+                    <a
+                        href="#experience"
+                        class="side-link"
+                    >
+                        ✍️ Experience
+                    </a>
+
+                    <a
+                        href="#tips"
+                        class="side-link"
+                    >
+                        💡 Tips
+                    </a>
+
+                </aside>
+
+
+
+                <main>
+
+
+                    <section
+                        id="route"
+                        class="route-box"
+                    >
+
+                        <h2 class="content-title">
+                            🗺️ The Route
+                        </h2>
+
+                        <div class="route-line">
+
+                            ${createRoute(
+                                story.route
+                            )}
+
+                        </div>
+
+                    </section>
+
+
+
+                    <article
+                        id="experience"
+                        class="article"
+                    >
+
+                        <h2 class="content-title">
+                            ✍️ The Journey
+                        </h2>
+
+                        ${createExperience(
+                            story.experience
+                        )}
+
+                    </article>
+
+
+
+                    <section
+                        id="tips"
+                        class="tips-box"
+                    >
+
+                        <h2 class="content-title">
+                            💡 Tips for the Next Traveler
+                        </h2>
+
+                        ${createTips(
+                            story.tips
+                        )}
+
+                    </section>
+
+
+
+                    <section class="story-end">
+
+                        <div style="font-size:45px;">
+                            🌍
+                        </div>
+
+                        <h2>
+                            One journey.
+                            <br>
+                            Someone else's shortcut.
+                        </h2>
+
+                        <p>
+                            This story was shared to help
+                            another traveler save time,
+                            money and confusion.
+                        </p>
+
+
+                        <a
+                            href="create-story.html"
+                            class="share-button"
+                        >
+                            + Share Your Journey
+                        </a>
+
+                    </section>
+
+
+                </main>
+
+            </section>
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Story loading error:",
+            error
+        );
+
+
+        storyPage.innerHTML = `
+
+            <div class="loading">
+
+                ❌ Unable to load this story.
+
+                <br><br>
+
+                <a
+                    href="index.html"
+                    class="share-button"
+                >
+                    ← Back to TravelStories
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+loadStory();
+
+</script>
+
+
+</body>
+
+</html>

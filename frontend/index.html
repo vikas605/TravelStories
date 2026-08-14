@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TravelStories — Real Journeys. Real Experiences.</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- BACKGROUND EFFECTS -->
+<div class="ambient ambient-one"></div>
+<div class="ambient ambient-two"></div>
+<div class="ambient ambient-three"></div>
+
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+        <span class="logo-icon">✦</span>
+        <span>TravelStories</span>
+    </a>
+
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="#explore">Explore</a>
+        <a href="#stories">Stories</a>
+
+        <a href="create-story.html" class="nav-button">
+            <span>+</span> Share Experience
+        </a>
+    </nav>
+
+</header>
+
+
+<!-- HERO -->
+<main>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                <span class="pulse-dot"></span>
+                REAL PEOPLE · REAL JOURNEYS
+            </div>
+
+            <h1>
+                Travel smarter
+                <span>through real stories.</span>
+            </h1>
+
+            <p class="hero-text">
+                Discover how people actually travelled —
+                routes, costs, transport, experiences and
+                practical tips from someone who has already
+                been there.
+            </p>
+
+
+            <!-- SEARCH -->
+            <div class="search-box">
+
+                <div class="search-icon">
+                    ⌕
+                </div>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search Pune, Goa, Latur..."
+                >
+
+                <button
+                    type="button"
+                    onclick="searchStories()"
+                >
+                    Explore
+                    <span>→</span>
+                </button>
+
+            </div>
+
+
+            <div class="hero-trust">
+
+                <div class="avatars">
+                    <span>👨🏻</span>
+                    <span>👩🏻</span>
+                    <span>🧑🏻</span>
+                    <span>👨🏽</span>
+                </div>
+
+                <p>
+                    <strong>Real travelers.</strong>
+                    Real experiences shared with you.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 3D HERO VISUAL -->
+        <div class="hero-visual">
+
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+
+            <div class="floating-card card-top">
+
+                <span>📍</span>
+
+                <div>
+                    <small>Destination</small>
+                    <strong>Goa</strong>
+                </div>
+
+            </div>
+
+
+            <div class="globe">
+
+                <div class="globe-inner">
+                    🌍
+                </div>
+
+            </div>
+
+
+            <div class="floating-card card-bottom">
+
+                <div class="mini-icon">
+                    ₹
+                </div>
+
+                <div>
+                    <small>Trip budget</small>
+                    <strong>₹2,450</strong>
+                </div>
+
+                <span class="trend">↗</span>
+
+            </div>
+
+
+            <div class="plane">
+                ✈
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK STATS -->
+    <section class="stats-section">
+
+        <div class="stats-card">
+
+            <div>
+                <strong>100%</strong>
+                <span>Real experiences</span>
+            </div>
+
+            <div>
+                <strong>01</strong>
+                <span>Simple platform</span>
+            </div>
+
+            <div>
+                <strong>∞</strong>
+                <span>Journeys to discover</span>
+            </div>
+
+            <div>
+                <strong>₹</strong>
+                <span>Know your budget</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EXPLORE -->
+    <section class="section" id="explore">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">
+                    DISCOVER
+                </p>
+
+                <h2>
+                    Explore places through
+                    <span>real people.</span>
+                </h2>
+
+            </div>
+
+            <p class="section-description">
+                Don't just search for a destination.
+                Learn how someone actually reached it.
+            </p>
+
+        </div>
+
+
+        <div class="place-grid">
+
+
+            <!-- PUNE -->
+            <article
+                class="place-card"
+                onclick="searchPlace('Pune')"
+                role="button"
+                tabindex="0"
+                onkeydown="if(event.key === 'Enter') searchPlace('Pune')"
+            >
+
+                <div class="place-image pune">
+
+                    <div class="place-glow"></div>
+
+                    <span class="place-emoji">
+                        🏙️
+                    </span>
+
+                    <span class="place-number">
+                        01
+                    </span>
+
+                </div>
+
+
+                <div class="place-content">
+
+                    <div class="place-title">
+
+                        <h3>Pune</h3>
+
+                        <span>India</span>
+
+                    </div>
+
+                    <p>
+                        Routes, local transport and
+                        experiences from real travelers.
+                    </p>
+
+                    <div class="place-footer">
+
+                        <span>
+                            Explore Pune stories
+                        </span>
+
+                        <span>→</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GOA -->
+            <article
+                class="place-card featured"
+                onclick="searchPlace('Goa')"
+                role="button"
+                tabindex="0"
+                onkeydown="if(event.key === 'Enter') searchPlace('Goa')"
+            >
+
+                <div class="place-image goa">
+
+                    <div class="place-glow"></div>
+
+                    <span class="place-emoji">
+                        🏖️
+                    </span>
+
+                    <span class="place-number">
+                        02
+                    </span>
+
+                </div>
+
+
+                <div class="place-content">
+
+                    <div class="place-title">
+
+                        <h3>Goa</h3>
+
+                        <span>India</span>
+
+                    </div>
+
+                    <p>
+                        Real trips, budgets and
+                        unforgettable experiences.
+                    </p>
+
+                    <div class="place-footer">
+
+                        <span>
+                            Explore Goa stories
+                        </span>
+
+                        <span>→</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- LATUR -->
+            <article
+                class="place-card"
+                onclick="searchPlace('Latur')"
+                role="button"
+                tabindex="0"
+                onkeydown="if(event.key === 'Enter') searchPlace('Latur')"
+            >
+
+                <div class="place-image latur">
+
+                    <div class="place-glow"></div>
+
+                    <span class="place-emoji">
+                        🌄
+                    </span>
+
+                    <span class="place-number">
+                        03
+                    </span>
+
+                </div>
+
+
+                <div class="place-content">
+
+                    <div class="place-title">
+
+                        <h3>Latur</h3>
+
+                        <span>Maharashtra</span>
+
+                    </div>
+
+                    <p>
+                        Discover routes and practical
+                        local travel experiences.
+                    </p>
+
+                    <div class="place-footer">
+
+                        <span>
+                            Explore Latur stories
+                        </span>
+
+                        <span>→</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- STORIES -->
+    <section class="section stories-section" id="stories">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="section-label">
+                    REAL EXPERIENCES
+                </p>
+
+                <h2>
+                    Stories from the road.
+                </h2>
+
+            </div>
+
+            <div class="live-indicator">
+                <span></span>
+                LIVE STORIES
+            </div>
+
+        </div>
+
+
+        <div
+            id="storiesContainer"
+            class="stories-grid"
+        >
+
+            <!-- JavaScript loads stories -->
+
+        </div>
+
+    </section>
+
+
+    <!-- SHARE CTA -->
+    <section class="share-section">
+
+        <div class="cta-glow"></div>
+
+        <div class="share-content">
+
+            <p class="section-label">
+                YOUR JOURNEY MATTERS
+            </p>
+
+            <h2>
+                You went there.
+                <span>Now help someone else.</span>
+            </h2>
+
+            <p>
+                Share your route, costs, transport and
+                experience. Your story could save someone
+                time, money and confusion.
+            </p>
+
+        </div>
+
+
+        <a
+            href="create-story.html"
+            class="primary-button"
+        >
+            <span>+</span>
+            Share My Experience
+            <strong>→</strong>
+        </a>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-top">
+
+        <div class="footer-brand">
+
+            <a href="index.html" class="logo">
+                <span class="logo-icon">✦</span>
+                TravelStories
+            </a>
+
+            <p>
+                Learn from people who have
+                already been there.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="#explore">
+                Explore
+            </a>
+
+            <a href="#stories">
+                Stories
+            </a>
+
+            <a href="create-story.html">
+                Share Experience
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 TravelStories
+        </span>
+
+        <span>
+            Built for curious travelers.
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

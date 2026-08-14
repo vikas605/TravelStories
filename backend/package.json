@@ -1,0 +1,1 @@
+{"name":"travelstories-backend","version":"1.0.0","description":"Backend API for TravelStories","main":"server.js","scripts":{"start":"node server.js"},"keywords":["travel","stories","community"],"author":"TravelStories","license":"ISC","type":"commonjs","dependencies":{"cors":"^2.8.6","dotenv":"^17.4.2","express":"^5.2.1","mssql":"^12.7.0"}}

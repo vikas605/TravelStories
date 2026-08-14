@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Share Your Journey — TravelStories</title>
+
+    <meta
+        name="description"
+        content="Share your real travel route, costs, transport and experience to help the next traveler."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">🌍</span>
+            <span>TravelStories</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html#explore">Explore</a>
+        </nav>
+
+    </header>
+
+
+    <!-- CREATE STORY -->
+
+    <main class="create-container">
+
+        <div class="create-header">
+
+            <span class="section-label">
+                SHARE YOUR EXPERIENCE
+            </span>
+
+            <h1>
+                Teach someone
+                <br>
+                how to get there.
+            </h1>
+
+            <p>
+                You already travelled the route.
+                Now share what you learned so another traveler
+                can make the journey with more confidence.
+            </p>
+
+        </div>
+
+
+        <!-- STORY FORM -->
+
+        <form id="storyForm">
+
+            <!-- JOURNEY -->
+
+            <section class="form-section">
+
+                <h2>📍 Your Journey</h2>
+
+                <p class="form-help">
+                    Start with the basic information about your trip.
+                </p>
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Story Title *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="Example: My Journey from Pune to Jamb Bk"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="start">
+                            Starting Place *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="start"
+                            placeholder="Example: Pune"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="destination">
+                            Destination *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="destination"
+                            placeholder="Example: Jamb Bk"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- TRANSPORT -->
+
+            <section class="form-section">
+
+                <h2>🚌 How did you travel?</h2>
+
+                <p class="form-help">
+                    Tell people which transport you used and
+                    approximately how much the journey cost.
+                </p>
+
+                <div class="form-group">
+
+                    <label for="transport">
+                        Main Transport *
+                    </label>
+
+                    <select id="transport" required>
+
+                        <option value="">
+                            Select your main transport
+                        </option>
+
+                        <option value="🚌 Bus">🚌 Bus</option>
+                        <option value="🚆 Train">🚆 Train</option>
+                        <option value="🚌 Bus + 🚆 Train">
+                            🚌 Bus + 🚆 Train
+                        </option>
+                        <option value="🚗 Car">🚗 Car</option>
+                        <option value="🏍️ Bike">🏍️ Bike</option>
+                        <option value="✈️ Flight">✈️ Flight</option>
+                        <option value="🚕 Taxi / Auto">
+                            🚕 Taxi / Auto
+                        </option>
+                        <option value="🚶 Walking">
+                            🚶 Walking
+                        </option>
+                        <option value="🚍 Multiple Transport">
+                            🚍 Multiple Transport
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="cost">
+                        Approximate Total Travel Cost *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="cost"
+                        placeholder="Example: 290"
+                        min="0"
+                        step="1"
+                        required
+                    >
+
+                    <p class="form-help">
+                        Enter the approximate amount you spent
+                        on transportation.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ROUTE -->
+
+            <section class="form-section">
+
+                <h2>🗺️ Your Route</h2>
+
+                <p class="form-help">
+                    Tell travelers every important stop and
+                    transport change.
+                </p>
+
+                <div class="form-group">
+
+                    <label for="route">
+                        Step-by-step route *
+                    </label>
+
+                    <textarea
+                        id="route"
+                        rows="9"
+                        placeholder="Example:
+
+Pune Room
+↓
+PMPML Bus to Manapa — ₹40
+↓
+Manapa
+↓
+Friend took me to Pune Station
+↓
+Train to Latur Road — ₹145
+↓
+Latur Road Station
+↓
+Bus / Rickshaw to Chakur Highway — ₹20
+↓
+Chakur Bus Stop
+↓
+Bus to Shirur — ₹40
+↓
+Bus to Jamb Bk — ₹45
+↓
+Brother picked me up and took me home"
+                        required
+                    ></textarea>
+
+                </div>
+
+            </section>
+
+
+            <!-- EXPERIENCE -->
+
+            <section class="form-section">
+
+                <h2>✍️ Tell Your Story</h2>
+
+                <p class="form-help">
+                    Don't worry about perfect writing.
+                    Just explain what happened in your own words.
+                </p>
+
+                <div class="form-group">
+
+                    <label for="experience">
+                        Your Travel Experience *
+                    </label>
+
+                    <textarea
+                        id="experience"
+                        rows="9"
+                        placeholder="Example:
+
+I travelled from Pune to my hometown Jamb Bk.
+
+First, I took a PMPML bus from my room to Manapa.
+It cost ₹40. From Manapa, my friend helped me reach
+Pune Railway Station.
+
+I then took a train towards Latur Road for ₹145.
+
+After reaching Latur Road, I travelled around 1 km
+and took a bus/rickshaw towards the highway.
+
+From there I reached Chakur, then travelled by bus
+to Shirur and finally to Jamb Bk.
+
+The journey involved multiple changes, so knowing the
+route beforehand would make it much easier."
+                        required
+                    ></textarea>
+
+                </div>
+
+            </section>
+
+
+            <!-- TIPS -->
+
+            <section class="form-section">
+
+                <h2>💡 Help the Next Traveler</h2>
+
+                <p class="form-help">
+                    Share anything you wish you had known before
+                    starting the journey.
+                </p>
+
+                <div class="form-group">
+
+                    <label for="tips">
+                        Helpful Tips
+                    </label>
+
+                    <textarea
+                        id="tips"
+                        rows="7"
+                        placeholder="Example:
+
+• Carry some cash.
+• Keep water with you.
+• Check train and bus timings before leaving.
+• Keep enough time between transport changes.
+• Ask locals if you are unsure about a bus stop.
+• Keep your phone charged for maps and calls."
+                    ></textarea>
+
+                </div>
+
+            </section>
+
+
+            <!-- MESSAGE -->
+
+            <section class="form-section">
+
+                <h2>🌍 One Journey Can Help Someone</h2>
+
+                <p class="form-help">
+                    Your experience could help someone who has never
+                    travelled this route before understand the cost,
+                    route and transport options before leaving home.
+                </p>
+
+            </section>
+
+
+            <!-- SUBMIT -->
+
+            <div class="submit-area">
+
+                <button
+                    type="submit"
+                    class="publish-button"
+                >
+                    🚀 Publish My Experience
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+
