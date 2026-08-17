@@ -1,7 +1,13 @@
 
-require("dotenv").config({ override: true });
-
+const path = require("path");
+const dotenv = require("dotenv");
 const sql = require("mssql");
+
+dotenv.config({
+    path: path.join(__dirname, ".env"),
+    override: true
+});
+
 const config = {
     server: process.env.DB_SERVER,
     database: process.env.DB_DATABASE,

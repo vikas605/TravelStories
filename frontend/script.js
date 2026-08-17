@@ -9,179 +9,193 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const storyForm = document.getElementById("storyForm");
 
-    if (!storyForm) {
-        return;
-    }
+    if (storyForm) {
 
-    storyForm.addEventListener("submit", async function (event) {
+        storyForm.addEventListener("submit", async function (event) {
 
-        event.preventDefault();
+            event.preventDefault();
 
-        const publishButton =
-            storyForm.querySelector(".publish-button");
+            const publishButton =
+                storyForm.querySelector(".publish-button");
 
-        const title =
-            document.getElementById("title")?.value.trim();
+            const title =
+                document.getElementById("title")?.value.trim();
 
-        const start =
-            document.getElementById("start")?.value.trim();
+            const start =
+                document.getElementById("start")?.value.trim();
 
-        const destination =
-            document.getElementById("destination")?.value.trim();
+            const destination =
+                document.getElementById("destination")?.value.trim();
 
-        const transport =
-            document.getElementById("transport")?.value;
+            const transport =
+                document.getElementById("transport")?.value;
 
-        const cost =
-            Number(document.getElementById("cost")?.value);
+            const costValue =
+                document.getElementById("cost")?.value;
 
-        const route =
-            document.getElementById("route")?.value.trim();
+            const route =
+                document.getElementById("route")?.value.trim();
 
-        const experience =
-            document.getElementById("experience")?.value.trim();
+            const experience =
+                document.getElementById("experience")?.value.trim();
 
-        const tips =
-            document.getElementById("tips")?.value.trim();
+            const tips =
+                document.getElementById("tips")?.value.trim();
 
+            if (
+                !title ||
+                !start ||
+                !destination ||
+                !transport ||
+                !costValue ||
+                !route ||
+                !experience
+            ) {
 
-        if (
-            !title ||
-            !start ||
-            !destination ||
-            !transport ||
-            !route ||
-            !experience
-        ) {
-
-            alert("❌ Please fill all required fields.");
-
-            return;
-        }
-
-
-        if (!Number.isFinite(cost) || cost < 0) {
-
-            alert("❌ Please enter a valid travel cost.");
-
-            return;
-        }
-
-
-        const storyData = {
-
-            title,
-            start,
-            destination,
-            transport,
-            cost,
-            route,
-            experience,
-            tips
-
-        };
-
-
-        console.log("Sending story:", storyData);
-
-
-        try {
-
-            if (publishButton) {
-
-                publishButton.disabled = true;
-                publishButton.textContent = "⏳ Publishing...";
-
+                alert("Please fill all required fields.");
+                return;
             }
 
+            const cost = Number(costValue);
 
-            const response = await fetch(API_URL, {
+            if (!Number.isFinite(cost) || cost < 0) {
 
-                method: "POST",
+                alert("Please enter a valid travel cost.");
+                return;
+            }
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify(storyData)
-
-            });
-
-
-            const responseText =
-                await response.text();
-
-
-            let result = {};
+            const storyData = {
+                title,
+                start,
+                destination,
+                transport,
+                cost,
+                route,
+                experience,
+                tips
+            };
 
             try {
 
-                result = JSON.parse(responseText);
+                if (publishButton) {
+                    publishButton.disabled = true;
+                    publishButton.textContent = "Publishing...";
+                }
 
-            } catch {
+                const response = await fetch(API_URL, {
 
-                result = {
-                    message: responseText
-                };
+                    method: "POST",
 
-            }
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
+                    body: JSON.stringify(storyData)
 
-            if (!response.ok) {
+                });
 
-                throw new Error(
-                    result.message ||
-                    `Server error: ${response.status}`
+                const responseText =
+                    await response.text();
+
+                let result = {};
+
+                try {
+
+                    result = JSON.parse(responseText);
+
+                } catch {
+
+                    result = {
+                        message: responseText
+                    };
+
+                }
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        result.message ||
+                        `Server error: ${response.status}`
+                    );
+
+                }
+
+                console.log(
+                    "Published story:",
+                    result.story
                 );
 
-            }
-
-
-            console.log(
-                "Published story:",
-                result.story
-            );
-
-
-            alert(
-                "🎉 " +
-                (
+                alert(
                     result.message ||
                     "Travel story published successfully!"
-                )
-            );
+                );
 
+                storyForm.reset();
 
-            storyForm.reset();
+                window.location.href = "index.html#stories";
 
+            } catch (error) {
 
-        } catch (error) {
+                console.error(
+                    "Publish story error:",
+                    error
+                );
 
-            console.error(
-                "Publish story error:",
-                error
-            );
+                alert(
+                    error.message ||
+                    "Unable to publish the travel story."
+                );
 
+            } finally {
 
-            alert(
-                "❌ Publishing failed.\n\n" +
-                error.message
-            );
+                if (publishButton) {
 
+                    publishButton.disabled = false;
 
-        } finally {
+                    publishButton.textContent =
+                        "Publish My Experience";
 
-            if (publishButton) {
-
-                publishButton.disabled = false;
-                publishButton.textContent =
-                    "🚀 Publish My Experience";
+                }
 
             }
 
-        }
+        });
 
-    });
+    }
+
+
+    // =================================================
+    // SEARCH ENTER KEY
+    // =================================================
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+
+                    event.preventDefault();
+
+                    searchStories();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // =================================================
+    // LOAD STORIES
+    // =================================================
+
+    loadStories();
 
 });
 
@@ -195,22 +209,20 @@ async function loadStories() {
     const container =
         document.getElementById("storiesContainer");
 
-
     if (!container) {
         return;
     }
 
-
     try {
 
         container.innerHTML = `
-            <p>🌍 Loading travel stories...</p>
+            <div class="empty-stories">
+                <p>Loading travel stories...</p>
+            </div>
         `;
-
 
         const response =
             await fetch(API_URL);
-
 
         if (!response.ok) {
 
@@ -220,10 +232,8 @@ async function loadStories() {
 
         }
 
-
         const stories =
             await response.json();
-
 
         if (!Array.isArray(stories)) {
 
@@ -233,12 +243,10 @@ async function loadStories() {
 
         }
 
-
         renderStories(
             stories,
             container
         );
-
 
     } catch (error) {
 
@@ -247,19 +255,25 @@ async function loadStories() {
             error
         );
 
-
         container.innerHTML = `
 
             <div class="stories-error">
 
                 <h3>
-                    ⚠️ Unable to load stories
+                    Unable to load stories
                 </h3>
 
                 <p>
                     Make sure the TravelStories backend
                     is running.
                 </p>
+
+                <button
+                    type="button"
+                    onclick="loadStories()"
+                >
+                    Try Again
+                </button>
 
             </div>
 
@@ -279,10 +293,8 @@ async function searchStories(searchValue = null) {
     const input =
         document.getElementById("searchInput");
 
-
     const container =
         document.getElementById("storiesContainer");
-
 
     if (!container) {
 
@@ -293,7 +305,6 @@ async function searchStories(searchValue = null) {
         return;
     }
 
-
     const originalSearch =
         searchValue !== null
             ? String(searchValue).trim()
@@ -301,16 +312,13 @@ async function searchStories(searchValue = null) {
                 ? input.value.trim()
                 : "";
 
-
     const searchTerm =
         normalizeText(originalSearch);
-
 
     console.log(
         "Searching for:",
         searchTerm
     );
-
 
     if (!searchTerm) {
 
@@ -321,7 +329,6 @@ async function searchStories(searchValue = null) {
         return;
     }
 
-
     try {
 
         container.innerHTML = `
@@ -329,7 +336,7 @@ async function searchStories(searchValue = null) {
             <div class="empty-stories">
 
                 <p>
-                    🔎 Searching for
+                    Searching for
                     "<strong>
                         ${escapeHTML(originalSearch)}
                     </strong>"...
@@ -339,10 +346,8 @@ async function searchStories(searchValue = null) {
 
         `;
 
-
         const response =
             await fetch(API_URL);
-
 
         if (!response.ok) {
 
@@ -352,10 +357,8 @@ async function searchStories(searchValue = null) {
 
         }
 
-
         const stories =
             await response.json();
-
 
         if (!Array.isArray(stories)) {
 
@@ -364,7 +367,6 @@ async function searchStories(searchValue = null) {
             );
 
         }
-
 
         const filtered =
             stories.filter(function (story) {
@@ -398,25 +400,21 @@ async function searchStories(searchValue = null) {
 
                     .join(" ");
 
-
                 return searchableText.includes(
                     searchTerm
                 );
 
             });
 
-
         console.log(
             "Total stories:",
             stories.length
         );
 
-
         console.log(
             "Matching stories:",
             filtered.length
         );
-
 
         if (filtered.length === 0) {
 
@@ -425,7 +423,7 @@ async function searchStories(searchValue = null) {
                 <div class="empty-stories">
 
                     <h3>
-                        🔎 No stories found
+                        No stories found
                     </h3>
 
                     <p>
@@ -450,21 +448,17 @@ async function searchStories(searchValue = null) {
 
             `;
 
-
             scrollToStories();
 
             return;
         }
-
 
         renderStories(
             filtered,
             container
         );
 
-
         scrollToStories();
-
 
     } catch (error) {
 
@@ -473,13 +467,12 @@ async function searchStories(searchValue = null) {
             error
         );
 
-
         container.innerHTML = `
 
             <div class="stories-error">
 
                 <h3>
-                    ⚠️ Search failed
+                    Search failed
                 </h3>
 
                 <p>
@@ -498,7 +491,6 @@ async function searchStories(searchValue = null) {
 
         `;
 
-
         scrollToStories();
 
     }
@@ -515,13 +507,11 @@ function searchPlace(place) {
     const searchInput =
         document.getElementById("searchInput");
 
-
     if (searchInput) {
 
         searchInput.value = place;
 
     }
-
 
     searchStories(place);
 
@@ -537,13 +527,11 @@ async function clearSearch() {
     const input =
         document.getElementById("searchInput");
 
-
     if (input) {
 
         input.value = "";
 
     }
-
 
     await loadStories();
 
@@ -568,12 +556,10 @@ function viewStory(id) {
         return;
     }
 
-
     console.log(
         "Opening story:",
         id
     );
-
 
     window.location.href =
         "story.html?id=" +
@@ -595,9 +581,7 @@ function renderStories(
         return;
     }
 
-
     container.innerHTML = "";
-
 
     if (
         !stories ||
@@ -609,7 +593,7 @@ function renderStories(
             <div class="empty-stories">
 
                 <h3>
-                    🌍 No stories yet
+                    No stories yet
                 </h3>
 
                 <p>
@@ -628,16 +612,13 @@ function renderStories(
         return;
     }
 
-
     stories.forEach(function (story) {
 
         const card =
             document.createElement("article");
 
-
         card.className =
             "story-card";
-
 
         card.innerHTML = `
 
@@ -657,13 +638,11 @@ function renderStories(
 
             </div>
 
-
             <h3>
                 ${escapeHTML(
                     story.title
                 )}
             </h3>
-
 
             <p>
 
@@ -680,7 +659,6 @@ function renderStories(
 
             </p>
 
-
             <p>
 
                 ${escapeHTML(
@@ -692,7 +670,6 @@ function renderStories(
 
             </p>
 
-
             <button
                 type="button"
                 onclick="viewStory(${Number(story.id)})"
@@ -701,7 +678,6 @@ function renderStories(
             </button>
 
         `;
-
 
         container.appendChild(card);
 
@@ -719,7 +695,6 @@ function scrollToStories() {
     const storiesSection =
         document.getElementById("stories");
 
-
     if (!storiesSection) {
 
         console.error(
@@ -728,7 +703,6 @@ function scrollToStories() {
 
         return;
     }
-
 
     setTimeout(function () {
 
@@ -760,7 +734,6 @@ function normalizeText(value) {
 
     }
 
-
     return String(value)
 
         .normalize("NFKC")
@@ -789,9 +762,7 @@ function shortenText(
 
     }
 
-
     text = String(text);
-
 
     if (
         text.length <= maxLength
@@ -800,7 +771,6 @@ function shortenText(
         return text;
 
     }
-
 
     return (
         text.substring(
@@ -827,7 +797,6 @@ function escapeHTML(value) {
         return "";
 
     }
-
 
     return String(value)
 
@@ -857,45 +826,3 @@ function escapeHTML(value) {
         );
 
 }
-
-
-// =====================================================
-// KEYBOARD + INITIAL LOAD
-// =====================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        const searchInput =
-            document.getElementById(
-                "searchInput"
-            );
-
-
-        if (searchInput) {
-
-            searchInput.addEventListener(
-                "keydown",
-                function (event) {
-
-                    if (
-                        event.key === "Enter"
-                    ) {
-
-                        event.preventDefault();
-
-                        searchStories();
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        loadStories();
-
-    }
-);
