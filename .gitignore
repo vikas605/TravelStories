@@ -11,3 +11,7 @@ backend/.env
 # OS files
 .DS_Store
 Thumbs.db
+# Temporary / backup files
+frontend/story.html.backup
+story-copy.txt
+story-current.txt
