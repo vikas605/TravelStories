@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,19 +36,11 @@
         href="style.css"
     >
 
-
     <style>
 
-        /* =====================================================
-           STORY PAGE
-        ===================================================== */
-
         body {
-
             margin: 0;
-
             min-height: 100vh;
-
             background:
                 radial-gradient(
                     circle at 10% 10%,
@@ -60,1028 +53,651 @@
                     transparent 30%
                 ),
                 #070a12;
-
             color: #f8fafc;
-
             font-family:
                 "DM Sans",
                 Arial,
                 sans-serif;
-
         }
-
 
         .story-page {
-
-            width: min(
-                1180px,
-                92%
-            );
-
+            width: min(1180px, 92%);
             margin: auto;
-
-            padding-bottom: 100px;
-
+            padding-bottom: 40px;
         }
-
-
-        /* =====================================================
-           NAVBAR
-        ===================================================== */
 
         .story-navbar {
-
             height: 80px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             gap: 20px;
-
         }
-
 
         .story-logo {
-
             color: white;
-
             text-decoration: none;
-
             font-weight: 700;
-
             font-size: 21px;
-
             display: flex;
-
             align-items: center;
-
             gap: 10px;
-
         }
 
-
         .story-logo-icon {
-
             width: 38px;
-
             height: 38px;
-
             border-radius: 50%;
-
             display: grid;
-
             place-items: center;
-
             background:
                 linear-gradient(
                     135deg,
                     #6366f1,
                     #06b6d4
                 );
-
             box-shadow:
                 0 8px 25px
                 rgba(99, 102, 241, 0.35);
-
             font-size: 20px;
-
         }
-
 
         .back-home {
-
             color: #cbd5e1;
-
             text-decoration: none;
-
             font-size: 14px;
-
             font-weight: 600;
-
             padding: 10px 16px;
-
             border: 1px solid
                 rgba(255,255,255,0.12);
-
             border-radius: 12px;
-
             transition: 0.2s ease;
-
         }
-
 
         .back-home:hover {
-
             color: white;
-
             background:
                 rgba(255,255,255,0.07);
-
         }
-
-
-        /* =====================================================
-           LOADING
-        ===================================================== */
 
         .loading {
-
             min-height: 65vh;
-
             display: flex;
-
             flex-direction: column;
-
             align-items: center;
-
             justify-content: center;
-
             text-align: center;
-
             color: #cbd5e1;
-
         }
-
 
         .loading-icon {
-
             font-size: 52px;
-
             margin-bottom: 20px;
-
         }
-
 
         .loading h2 {
-
             margin: 0 0 8px;
-
             color: white;
-
         }
-
 
         .loading p {
-
             margin: 0;
-
             color: #94a3b8;
-
         }
-
-
-        .loading a {
-
-            margin-top: 25px;
-
-        }
-
-
-        /* =====================================================
-           STORY HERO
-        ===================================================== */
 
         .story-hero {
-
             position: relative;
-
             overflow: hidden;
-
             min-height: 380px;
-
             border-radius: 30px;
-
             padding: 70px;
-
             display: flex;
-
             align-items: center;
-
             box-sizing: border-box;
-
             background:
                 linear-gradient(
                     135deg,
                     rgba(79,70,229,0.24),
                     rgba(6,182,212,0.12)
                 );
-
             border: 1px solid
                 rgba(255,255,255,0.10);
-
             box-shadow:
                 0 30px 80px
                 rgba(0,0,0,0.30);
-
         }
 
-
         .hero-glow {
-
             position: absolute;
-
             width: 400px;
-
             height: 400px;
-
             border-radius: 50%;
-
             right: -120px;
-
             top: -130px;
-
             background:
                 radial-gradient(
                     circle,
                     rgba(6,182,212,0.22),
                     transparent 70%
                 );
-
             pointer-events: none;
-
         }
-
 
         .hero-content {
-
             position: relative;
-
             z-index: 2;
-
             max-width: 760px;
-
         }
-
 
         .story-category {
-
             display: inline-flex;
-
             align-items: center;
-
             gap: 8px;
-
             padding: 8px 13px;
-
             border-radius: 999px;
-
             background:
                 rgba(255,255,255,0.07);
-
             border: 1px solid
                 rgba(255,255,255,0.10);
-
             color: #cbd5e1;
-
             font-size: 12px;
-
             font-weight: 700;
-
             letter-spacing: 0.8px;
-
             margin-bottom: 22px;
-
         }
 
-
         .story-hero h1 {
-
             margin: 0;
-
             font-family:
                 "Playfair Display",
                 Georgia,
                 serif;
-
-            font-size: clamp(
-                42px,
-                6vw,
-                76px
-            );
-
+            font-size: clamp(42px, 6vw, 76px);
             line-height: 1.05;
-
             letter-spacing: -2px;
-
             text-transform: capitalize;
-
         }
 
-
         .story-hero h1 span {
-
             display: block;
-
             margin-top: 8px;
-
             background:
                 linear-gradient(
                     90deg,
                     #67e8f9,
                     #a5b4fc
                 );
-
             -webkit-background-clip: text;
-
             background-clip: text;
-
             color: transparent;
-
         }
-
 
         .story-subtitle {
-
             margin: 25px 0 0;
-
             color: #cbd5e1;
-
             font-size: 18px;
-
             line-height: 1.7;
-
         }
 
-
         .floating-globe {
-
             position: absolute;
-
             right: 8%;
-
             bottom: 35px;
-
             font-size: 115px;
-
             opacity: 0.16;
-
             filter:
                 drop-shadow(
                     0 15px 30px
                     rgba(0,0,0,0.5)
                 );
-
             user-select: none;
-
         }
-
-
-        /* =====================================================
-           STATS
-        ===================================================== */
 
         .trip-stats {
-
             display: grid;
-
-            grid-template-columns:
-                repeat(
-                    3,
-                    1fr
-                );
-
+            grid-template-columns: repeat(3, 1fr);
             gap: 18px;
-
             margin-top: 20px;
-
         }
-
 
         .stat-card {
-
             padding: 24px;
-
             border-radius: 20px;
-
             background:
                 rgba(255,255,255,0.045);
-
             border: 1px solid
                 rgba(255,255,255,0.08);
-
             display: grid;
-
-            grid-template-columns:
-                auto 1fr;
-
+            grid-template-columns: auto 1fr;
             column-gap: 14px;
-
             align-items: center;
-
         }
-
 
         .stat-icon {
-
-            grid-row:
-                span 2;
-
+            grid-row: span 2;
             width: 48px;
-
             height: 48px;
-
             border-radius: 15px;
-
             display: grid;
-
             place-items: center;
-
             background:
                 rgba(255,255,255,0.07);
-
             font-size: 24px;
-
         }
-
 
         .stat-label {
-
             color: #94a3b8;
-
             font-size: 12px;
-
             font-weight: 700;
-
             text-transform: uppercase;
-
             letter-spacing: 0.7px;
-
         }
-
 
         .stat-value {
-
             margin-top: 4px;
-
             color: white;
-
             font-size: 16px;
-
             font-weight: 700;
-
         }
-
-
-        /* =====================================================
-           STORY LAYOUT
-        ===================================================== */
 
         .story-layout {
-
             display: grid;
-
-            grid-template-columns:
-                210px 1fr;
-
+            grid-template-columns: 210px 1fr;
             gap: 55px;
-
             margin-top: 55px;
-
         }
-
 
         .story-sidebar {
-
             position: sticky;
-
             top: 25px;
-
             height: fit-content;
-
         }
-
 
         .side-title {
-
             color: #64748b;
-
             font-size: 11px;
-
             font-weight: 800;
-
             letter-spacing: 1.5px;
-
             margin-bottom: 18px;
-
         }
-
 
         .side-link {
-
             display: block;
-
             color: #94a3b8;
-
             text-decoration: none;
-
             padding: 11px 0;
-
             font-size: 14px;
-
             transition: 0.2s ease;
-
         }
-
 
         .side-link:hover {
-
             color: white;
-
-            transform:
-                translateX(4px);
-
+            transform: translateX(4px);
         }
-
-
-        /* =====================================================
-           CONTENT
-        ===================================================== */
 
         .route-box,
         .article,
         .tips-box {
-
             margin-bottom: 55px;
-
         }
-
 
         .route-box {
-
             padding: 30px;
-
             border-radius: 22px;
-
             background:
                 rgba(255,255,255,0.045);
-
             border: 1px solid
                 rgba(255,255,255,0.08);
-
         }
 
-
         .content-title {
-
             margin: 0 0 25px;
-
             font-family:
                 "Playfair Display",
                 Georgia,
                 serif;
-
             font-size: 30px;
-
             color: white;
-
         }
-
 
         .route-line {
-
             position: relative;
-
             padding-left: 28px;
-
             border-left: 2px solid
                 rgba(99,102,241,0.5);
-
         }
-
 
         .route-step {
-
             position: relative;
-
             padding: 13px 15px;
-
             margin-bottom: 10px;
-
             border-radius: 12px;
-
             color: #dbeafe;
-
             background:
                 rgba(255,255,255,0.04);
-
         }
 
-
         .route-step::before {
-
             content: "";
-
             position: absolute;
-
             width: 10px;
-
             height: 10px;
-
             border-radius: 50%;
-
             left: -34px;
-
             top: 19px;
-
             background: #818cf8;
-
             box-shadow:
                 0 0 0 5px
                 rgba(129,140,248,0.12);
-
         }
-
 
         .article {
-
             color: #cbd5e1;
-
             font-size: 17px;
-
             line-height: 1.9;
-
         }
-
 
         .article p {
-
-            margin:
-                0 0 25px;
-
+            margin: 0 0 25px;
         }
-
 
         .article .lead {
-
             color: white;
-
             font-size: 20px;
-
         }
 
-
-        /* =====================================================
-           TIPS
-        ===================================================== */
-
         .tips-box {
-
             padding: 30px;
-
             border-radius: 22px;
-
             background:
                 linear-gradient(
                     135deg,
                     rgba(245,158,11,0.09),
                     rgba(255,255,255,0.035)
                 );
-
             border: 1px solid
                 rgba(245,158,11,0.12);
-
         }
-
 
         .tip {
-
             display: flex;
-
             align-items: flex-start;
-
             gap: 13px;
-
             padding: 14px 0;
-
             color: #dbeafe;
-
             line-height: 1.6;
-
             border-bottom: 1px solid
                 rgba(255,255,255,0.06);
-
         }
-
 
         .tip:last-child {
-
             border-bottom: 0;
-
         }
-
 
         .tip-icon {
-
             flex-shrink: 0;
-
             font-size: 20px;
-
         }
 
-
-        /* =====================================================
-           STORY END
-        ===================================================== */
-
         .story-end {
-
             margin-top: 80px;
-
             padding: 55px 30px;
-
             text-align: center;
-
             border-radius: 25px;
-
             background:
                 linear-gradient(
                     135deg,
                     rgba(79,70,229,0.13),
                     rgba(14,165,233,0.08)
                 );
-
             border: 1px solid
                 rgba(255,255,255,0.08);
-
         }
-
 
         .story-end-globe {
-
             font-size: 48px;
-
             margin-bottom: 15px;
-
         }
 
-
         .story-end h2 {
-
             margin: 0;
-
             font-family:
                 "Playfair Display",
                 Georgia,
                 serif;
-
             font-size: 32px;
-
             line-height: 1.3;
-
         }
-
 
         .story-end p {
-
             max-width: 550px;
-
-            margin:
-                18px auto 28px;
-
+            margin: 18px auto 28px;
             color: #94a3b8;
-
             line-height: 1.7;
-
         }
 
-
         .share-button {
-
             display: inline-flex;
-
             align-items: center;
-
             justify-content: center;
-
             padding: 13px 20px;
-
             border-radius: 12px;
-
             background:
                 linear-gradient(
                     135deg,
                     #6366f1,
                     #06b6d4
                 );
-
             color: white;
-
             text-decoration: none;
-
             font-weight: 700;
-
             box-shadow:
                 0 10px 30px
                 rgba(99,102,241,0.25);
-
             transition: 0.2s ease;
-
         }
-
 
         .share-button:hover {
-
-            transform:
-                translateY(-2px);
-
+            transform: translateY(-2px);
         }
 
-
         /* =====================================================
-           ERROR
-        ===================================================== */
+           WEBSITE OWNER
+           ===================================================== */
+
+        .website-owner {
+            margin-top: 70px;
+            padding: 35px 20px;
+            text-align: center;
+            border-top: 1px solid
+                rgba(255,255,255,0.08);
+        }
+
+        .website-owner-label {
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+        }
+
+        .website-owner-name {
+            margin-bottom: 14px;
+            color: #f8fafc;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .website-owner-contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .website-owner-contact a {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 13px;
+            border: 1px solid
+                rgba(255,255,255,0.08);
+            border-radius: 10px;
+            background:
+                rgba(255,255,255,0.035);
+            color: #94a3b8;
+            font-size: 13px;
+            text-decoration: none;
+            transition:
+                color 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .website-owner-contact a:hover {
+            color: #67e8f9;
+            border-color:
+                rgba(103,232,249,0.25);
+            background:
+                rgba(103,232,249,0.06);
+            transform: translateY(-2px);
+        }
 
         .error-box {
-
             min-height: 60vh;
-
             display: flex;
-
             flex-direction: column;
-
             align-items: center;
-
             justify-content: center;
-
             text-align: center;
-
         }
-
 
         .error-icon {
-
             font-size: 55px;
-
             margin-bottom: 15px;
-
         }
-
 
         .error-box h2 {
-
             margin: 0 0 10px;
-
         }
-
 
         .error-box p {
-
             color: #94a3b8;
-
-            max-width: 500px;
-
+            max-width: 650px;
             line-height: 1.7;
-
         }
 
-
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
+        .error-details {
+            margin-top: 10px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #cbd5e1;
+            font-family: monospace;
+            font-size: 13px;
+            word-break: break-word;
+            max-width: 700px;
+        }
 
         @media (max-width: 800px) {
 
             .story-hero {
-
                 padding: 45px 28px;
-
                 min-height: 340px;
-
             }
-
 
             .floating-globe {
-
                 font-size: 80px;
-
                 right: 20px;
-
                 bottom: 20px;
-
             }
-
 
             .trip-stats {
-
-                grid-template-columns:
-                    1fr;
-
+                grid-template-columns: 1fr;
             }
-
 
             .story-layout {
-
-                grid-template-columns:
-                    1fr;
-
+                grid-template-columns: 1fr;
                 gap: 10px;
-
                 margin-top: 35px;
-
             }
-
 
             .story-sidebar {
-
                 position: static;
-
                 display: flex;
-
                 flex-wrap: wrap;
-
                 align-items: center;
-
                 gap: 10px;
-
             }
-
 
             .side-title {
-
                 width: 100%;
-
                 margin-bottom: 0;
-
             }
 
-
             .side-link {
-
                 padding: 8px 12px;
-
                 border-radius: 10px;
-
                 background:
                     rgba(255,255,255,0.05);
-
             }
 
         }
 
-
         @media (max-width: 500px) {
 
             .story-page {
-
                 width: 94%;
-
             }
-
 
             .story-navbar {
-
                 height: 70px;
-
             }
-
 
             .story-hero {
-
                 border-radius: 22px;
-
                 padding: 35px 22px;
-
             }
-
 
             .story-hero h1 {
-
                 font-size: 42px;
-
                 letter-spacing: -1px;
-
             }
-
 
             .story-subtitle {
-
                 font-size: 16px;
-
             }
-
 
             .floating-globe {
-
                 opacity: 0.08;
-
             }
-
 
             .route-box,
             .tips-box {
-
                 padding: 22px;
-
             }
 
-
             .content-title {
-
                 font-size: 26px;
+            }
 
+            .website-owner {
+                margin-top: 50px;
+                padding: 30px 10px;
+            }
+
+            .website-owner-contact {
+                flex-direction: column;
+                gap: 9px;
+            }
+
+            .website-owner-contact a {
+                width: 100%;
+                justify-content: center;
             }
 
         }
@@ -1090,16 +706,9 @@
 
 </head>
 
-
 <body>
 
-
 <div class="story-page">
-
-
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
 
     <nav class="story-navbar">
 
@@ -1118,7 +727,6 @@
 
         </a>
 
-
         <a
             href="index.html"
             class="back-home"
@@ -1127,12 +735,6 @@
         </a>
 
     </nav>
-
-
-
-    <!-- =====================================================
-         STORY CONTENT
-    ====================================================== -->
 
     <div id="storyPage">
 
@@ -1154,26 +756,21 @@
 
     </div>
 
-
 </div>
-
 
 
 <script>
 
     /* =====================================================
-       TRAVELSTORIES API
+       LIVE TRAVELSTORIES API
     ===================================================== */
 
     const API_URL =
-        "http://localhost:5000/api/stories";
+        "https://travelstories-backend.onrender.com/api/stories";
 
 
     /* =====================================================
-       READ STORY ID FROM URL
-       
-       Example:
-       story.html?id=1786734179501
+       READ STORY ID
     ===================================================== */
 
     const params =
@@ -1181,10 +778,8 @@
             window.location.search
         );
 
-
     const storyId =
         params.get("id");
-
 
     const storyPage =
         document.getElementById(
@@ -1202,38 +797,15 @@
             value === null ||
             value === undefined
         ) {
-
             return "";
-
         }
 
-
         return String(value)
-
-            .replaceAll(
-                "&",
-                "&amp;"
-            )
-
-            .replaceAll(
-                "<",
-                "&lt;"
-            )
-
-            .replaceAll(
-                ">",
-                "&gt;"
-            )
-
-            .replaceAll(
-                '"',
-                "&quot;"
-            )
-
-            .replaceAll(
-                "'",
-                "&#039;"
-            );
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
 
     }
 
@@ -1246,13 +818,9 @@
 
         const lines =
             String(route || "")
-                .split("\n")
-                .map(
-                    line =>
-                        line.trim()
-                )
+                .split(/\n/)
+                .map(line => line.trim())
                 .filter(Boolean);
-
 
         if (lines.length === 0) {
 
@@ -1264,38 +832,23 @@
 
         }
 
-
         return lines
-
             .map(line => {
-
-                /*
-                 * Do not create a card for a
-                 * standalone down arrow.
-                 */
 
                 if (
                     line === "↓" ||
                     line === "→"
                 ) {
-
                     return "";
-
                 }
 
-
                 return `
-
                     <div class="route-step">
-
                         ${escapeHTML(line)}
-
                     </div>
-
                 `;
 
             })
-
             .join("");
 
     }
@@ -1310,16 +863,10 @@
         const paragraphs =
             String(text || "")
                 .split(/\n\s*\n/)
-                .map(
-                    paragraph =>
-                        paragraph.trim()
-                )
+                .map(paragraph => paragraph.trim())
                 .filter(Boolean);
 
-
-        if (
-            paragraphs.length === 0
-        ) {
+        if (paragraphs.length === 0) {
 
             return `
                 <p>
@@ -1329,33 +876,20 @@
 
         }
 
-
         return paragraphs
+            .map((paragraph, index) => {
 
-            .map(
-                (paragraph, index) => {
+                return `
+                    <p class="${
+                        index === 0
+                            ? "lead"
+                            : ""
+                    }">
+                        ${escapeHTML(paragraph)}
+                    </p>
+                `;
 
-                    return `
-
-                        <p
-                            class="${
-                                index === 0
-                                    ? "lead"
-                                    : ""
-                            }"
-                        >
-
-                            ${escapeHTML(
-                                paragraph
-                            )}
-
-                        </p>
-
-                    `;
-
-                }
-            )
-
+            })
             .join("");
 
     }
@@ -1373,21 +907,14 @@
                 .map(
                     tip =>
                         tip
-                            .replace(
-                                /^•\s*/,
-                                ""
-                            )
+                            .replace(/^•\s*/, "")
                             .trim()
                 )
                 .filter(Boolean);
 
-
-        if (
-            tips.length === 0
-        ) {
+        if (tips.length === 0) {
 
             return `
-
                 <div class="tip">
 
                     <span class="tip-icon">
@@ -1399,18 +926,14 @@
                     </span>
 
                 </div>
-
             `;
 
         }
 
-
         return tips
-
             .map(tip => {
 
                 return `
-
                     <div class="tip">
 
                         <span class="tip-icon">
@@ -1422,11 +945,9 @@
                         </span>
 
                     </div>
-
                 `;
 
             })
-
             .join("");
 
     }
@@ -1439,26 +960,19 @@
     function formatDate(dateValue) {
 
         if (!dateValue) {
-
             return "Recently";
-
         }
-
 
         const date =
             new Date(dateValue);
-
 
         if (
             Number.isNaN(
                 date.getTime()
             )
         ) {
-
             return "Recently";
-
         }
-
 
         return date.toLocaleDateString(
             "en-IN",
@@ -1477,16 +991,6 @@
     ===================================================== */
 
     async function loadStory() {
-
-
-        /*
-         * IMPORTANT:
-         *
-         * We specifically check the URL.
-         *
-         * Correct:
-         * story.html?id=1786734179501
-         */
 
         if (!storyId) {
 
@@ -1523,15 +1027,7 @@
         }
 
 
-        /*
-         * Validate that the ID is numeric.
-         */
-
-        if (
-            !/^\d+$/.test(
-                storyId
-            )
-        ) {
+        if (!/^\d+$/.test(storyId)) {
 
             storyPage.innerHTML = `
 
@@ -1567,20 +1063,32 @@
 
         try {
 
+            const requestURL =
+                API_URL +
+                "/" +
+                encodeURIComponent(storyId) +
+                "?_=" +
+                Date.now();
+
 
             console.log(
-                "Loading story:",
-                storyId
+                "Loading story from:",
+                requestURL
             );
 
 
             const response =
                 await fetch(
-                    API_URL +
-                    "/" +
-                    encodeURIComponent(
-                        storyId
-                    )
+                    requestURL,
+                    {
+                        method: "GET",
+                        mode: "cors",
+                        cache: "no-store",
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
+                    }
                 );
 
 
@@ -1601,25 +1109,25 @@
                     const errorResult =
                         await response.json();
 
-
                     if (
                         errorResult &&
                         errorResult.message
                     ) {
-
                         errorMessage =
                             errorResult.message;
-
                     }
 
                 } catch {
 
-                    // Ignore JSON parsing failure.
+                    // Ignore JSON parsing errors.
 
                 }
 
 
                 throw new Error(
+                    "HTTP " +
+                    response.status +
+                    ": " +
                     errorMessage
                 );
 
@@ -1653,10 +1161,6 @@
                 result.story;
 
 
-            /*
-             * Update browser title.
-             */
-
             document.title =
                 String(
                     story.title ||
@@ -1665,30 +1169,17 @@
                 " — TravelStories";
 
 
-            /* =================================================
-               RENDER STORY
-            ================================================= */
-
             storyPage.innerHTML = `
-
-
-                <!-- =========================================
-                     HERO
-                ========================================== -->
 
                 <section class="story-hero">
 
                     <div class="hero-glow"></div>
 
-
                     <div class="hero-content">
 
                         <div class="story-category">
-
                             🌍 REAL TRAVEL EXPERIENCE
-
                         </div>
-
 
                         <h1>
 
@@ -1709,7 +1200,6 @@
 
                         </h1>
 
-
                         <p class="story-subtitle">
 
                             ${escapeHTML(
@@ -1721,7 +1211,6 @@
 
                     </div>
 
-
                     <div
                         class="floating-globe"
                         aria-hidden="true"
@@ -1732,13 +1221,7 @@
                 </section>
 
 
-
-                <!-- =========================================
-                     TRIP STATS
-                ========================================== -->
-
                 <section class="trip-stats">
-
 
                     <div class="stat-card">
 
@@ -1746,23 +1229,18 @@
                             🚌
                         </div>
 
-
                         <span class="stat-label">
                             Transport
                         </span>
 
-
                         <span class="stat-value">
-
                             ${escapeHTML(
                                 story.transport ||
                                 "Not specified"
                             )}
-
                         </span>
 
                     </div>
-
 
 
                     <div class="stat-card">
@@ -1771,24 +1249,19 @@
                             💰
                         </div>
 
-
                         <span class="stat-label">
                             Travel Cost
                         </span>
 
-
                         <span class="stat-value">
-
                             ₹${Number(
                                 story.cost || 0
                             ).toLocaleString(
                                 "en-IN"
                             )}
-
                         </span>
 
                     </div>
-
 
 
                     <div class="stat-card">
@@ -1797,40 +1270,28 @@
                             📅
                         </div>
 
-
                         <span class="stat-label">
                             Shared
                         </span>
 
-
                         <span class="stat-value">
-
                             ${formatDate(
                                 story.createdAt
                             )}
-
                         </span>
 
                     </div>
 
-
                 </section>
 
 
-
-                <!-- =========================================
-                     STORY BODY
-                ========================================== -->
-
                 <section class="story-layout">
-
 
                     <aside class="story-sidebar">
 
                         <div class="side-title">
                             THIS JOURNEY
                         </div>
-
 
                         <a
                             href="#route"
@@ -1839,14 +1300,12 @@
                             🗺️ Route
                         </a>
 
-
                         <a
                             href="#experience"
                             class="side-link"
                         >
                             ✍️ Experience
                         </a>
-
 
                         <a
                             href="#tips"
@@ -1858,13 +1317,7 @@
                     </aside>
 
 
-
                     <main>
-
-
-                        <!-- =================================
-                             ROUTE
-                        ================================== -->
 
                         <section
                             id="route"
@@ -1875,22 +1328,14 @@
                                 🗺️ The Route
                             </h2>
 
-
                             <div class="route-line">
-
                                 ${createRoute(
                                     story.route
                                 )}
-
                             </div>
 
                         </section>
 
-
-
-                        <!-- =================================
-                             EXPERIENCE
-                        ================================== -->
 
                         <article
                             id="experience"
@@ -1901,18 +1346,12 @@
                                 ✍️ The Journey
                             </h2>
 
-
                             ${createExperience(
                                 story.experience
                             )}
 
                         </article>
 
-
-
-                        <!-- =================================
-                             TIPS
-                        ================================== -->
 
                         <section
                             id="tips"
@@ -1923,7 +1362,6 @@
                                 💡 Tips for the Next Traveler
                             </h2>
 
-
                             ${createTips(
                                 story.tips
                             )}
@@ -1931,38 +1369,23 @@
                         </section>
 
 
-
-                        <!-- =================================
-                             END
-                        ================================== -->
-
                         <section class="story-end">
 
-
-                            <div
-                                class="story-end-globe"
-                            >
+                            <div class="story-end-globe">
                                 🌍
                             </div>
 
-
                             <h2>
-
                                 One journey.
                                 <br>
                                 Someone else's shortcut.
-
                             </h2>
 
-
                             <p>
-
                                 This story was shared
                                 to help another traveler
                                 save time, money and confusion.
-
                             </p>
-
 
                             <a
                                 href="create-story.html"
@@ -1971,20 +1394,50 @@
                                 + Share Your Journey
                             </a>
 
-
                         </section>
-
 
                     </main>
 
+                </section>
+
+
+                <section class="website-owner">
+
+                    <div class="website-owner-label">
+                        Created &amp; Managed By
+                    </div>
+
+                    <div class="website-owner-name">
+                        Gaikwad Vikas Tejerao
+                    </div>
+
+                    <div class="website-owner-contact">
+
+                        <a
+                            href="mailto:vikasgaikwad787@gmail.com"
+                        >
+                            ✉️
+                            <span>
+                                vikasgaikwad787@gmail.com
+                            </span>
+                        </a>
+
+                        <a
+                            href="tel:+918482852294"
+                        >
+                            📞
+                            <span>
+                                8482852294
+                            </span>
+                        </a>
+
+                    </div>
 
                 </section>
 
             `;
 
-
         } catch (error) {
-
 
             console.error(
                 "Story loading error:",
@@ -2000,33 +1453,28 @@
                         😕
                     </div>
 
-
                     <h2>
                         Unable to load this story
                     </h2>
 
-
                     <p>
-
-                        ${
-                            escapeHTML(
-                                error.message ||
-                                "Something went wrong while loading the story."
-                            )
-                        }
-
+                        Something went wrong while
+                        connecting to the TravelStories API.
                     </p>
 
+                    <div class="error-details">
+                        ${escapeHTML(
+                            error.message ||
+                            "Unknown error"
+                        )}
+                    </div>
 
                     <p>
-
                         Story ID:
                         <strong>
                             ${escapeHTML(storyId)}
                         </strong>
-
                     </p>
-
 
                     <a
                         href="index.html"
@@ -2051,7 +1499,6 @@
     loadStory();
 
 </script>
-
 
 </body>
 
