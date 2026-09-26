@@ -36,3 +36,18 @@ SELECT
     local_tcp_port
 FROM sys.dm_exec_connections
 WHERE session_id = @@SPID;
+
+USE TravelStoriesDB;
+GO
+
+ALTER ROLE db_ddladmin ADD MEMBER [TravelStoriesUser];
+GO
+
+SELECT SUSER_SNAME(), IS_SRVROLEMEMBER('sysadmin');
+GO
+
+SELECT SUSER_SNAME(), IS_SRVROLEMEMBER('sysadmin');
+GO
+
+SELECT SUSER_SNAME(), IS_SRVROLEMEMBER('sysadmin');
+GO
