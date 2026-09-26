@@ -1,5 +1,4 @@
-const API_URL = "http://localhost:5000/api/stories";
-
+const API_URL = "https://travelstories-backend.onrender.com/api/stories";
 
 // =====================================================
 // CREATE / PUBLISH STORY
