@@ -1,1080 +1,592 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Travel Story — TravelStories</title>
-
-    <meta
-        name="description"
-        content="Read a real travel experience shared by a traveler on TravelStories."
-    >
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <title>Travel Story | TravelStories</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
-            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f8fb;
+            color: #172033;
             min-height: 100vh;
-            background:
-                radial-gradient(
-                    circle at 10% 10%,
-                    rgba(79, 70, 229, 0.18),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 90% 20%,
-                    rgba(14, 165, 233, 0.15),
-                    transparent 30%
-                ),
-                #070a12;
-            color: #f8fafc;
-            font-family:
-                "DM Sans",
-                Arial,
-                sans-serif;
         }
 
-        .story-page {
-            width: min(1180px, 92%);
-            margin: auto;
-            padding-bottom: 40px;
-        }
-
-        .story-navbar {
-            height: 80px;
+        .topbar {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 18px 6%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .story-logo {
-            color: white;
+        .brand {
+            font-size: 22px;
+            font-weight: 800;
+            color: #172033;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 21px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .story-logo-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            background:
-                linear-gradient(
-                    135deg,
-                    #6366f1,
-                    #06b6d4
-                );
-            box-shadow:
-                0 8px 25px
-                rgba(99, 102, 241, 0.35);
-            font-size: 20px;
+        .brand span {
+            color: #2563eb;
         }
 
-        .back-home {
-            color: #cbd5e1;
+        .back-link {
             text-decoration: none;
-            font-size: 14px;
+            color: #2563eb;
             font-weight: 600;
-            padding: 10px 16px;
-            border: 1px solid
-                rgba(255,255,255,0.12);
-            border-radius: 12px;
-            transition: 0.2s ease;
         }
 
-        .back-home:hover {
-            color: white;
-            background:
-                rgba(255,255,255,0.07);
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            width: min(1000px, 92%);
+            margin: 45px auto;
         }
 
         .loading {
-            min-height: 65vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 60px 25px;
             text-align: center;
-            color: #cbd5e1;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
         }
 
         .loading-icon {
-            font-size: 52px;
-            margin-bottom: 20px;
-        }
-
-        .loading h2 {
-            margin: 0 0 8px;
-            color: white;
-        }
-
-        .loading p {
-            margin: 0;
-            color: #94a3b8;
-        }
-
-        .story-hero {
-            position: relative;
-            overflow: hidden;
-            min-height: 380px;
-            border-radius: 30px;
-            padding: 70px;
-            display: flex;
-            align-items: center;
-            box-sizing: border-box;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(79,70,229,0.24),
-                    rgba(6,182,212,0.12)
-                );
-            border: 1px solid
-                rgba(255,255,255,0.10);
-            box-shadow:
-                0 30px 80px
-                rgba(0,0,0,0.30);
-        }
-
-        .hero-glow {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            right: -120px;
-            top: -130px;
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(6,182,212,0.22),
-                    transparent 70%
-                );
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 760px;
-        }
-
-        .story-category {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 13px;
-            border-radius: 999px;
-            background:
-                rgba(255,255,255,0.07);
-            border: 1px solid
-                rgba(255,255,255,0.10);
-            color: #cbd5e1;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.8px;
-            margin-bottom: 22px;
-        }
-
-        .story-hero h1 {
-            margin: 0;
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-            font-size: clamp(42px, 6vw, 76px);
-            line-height: 1.05;
-            letter-spacing: -2px;
-            text-transform: capitalize;
-        }
-
-        .story-hero h1 span {
-            display: block;
-            margin-top: 8px;
-            background:
-                linear-gradient(
-                    90deg,
-                    #67e8f9,
-                    #a5b4fc
-                );
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .story-subtitle {
-            margin: 25px 0 0;
-            color: #cbd5e1;
-            font-size: 18px;
-            line-height: 1.7;
-        }
-
-        .floating-globe {
-            position: absolute;
-            right: 8%;
-            bottom: 35px;
-            font-size: 115px;
-            opacity: 0.16;
-            filter:
-                drop-shadow(
-                    0 15px 30px
-                    rgba(0,0,0,0.5)
-                );
-            user-select: none;
-        }
-
-        .trip-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-top: 20px;
-        }
-
-        .stat-card {
-            padding: 24px;
-            border-radius: 20px;
-            background:
-                rgba(255,255,255,0.045);
-            border: 1px solid
-                rgba(255,255,255,0.08);
-            display: grid;
-            grid-template-columns: auto 1fr;
-            column-gap: 14px;
-            align-items: center;
-        }
-
-        .stat-icon {
-            grid-row: span 2;
-            width: 48px;
-            height: 48px;
-            border-radius: 15px;
-            display: grid;
-            place-items: center;
-            background:
-                rgba(255,255,255,0.07);
-            font-size: 24px;
-        }
-
-        .stat-label {
-            color: #94a3b8;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-        }
-
-        .stat-value {
-            margin-top: 4px;
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .story-layout {
-            display: grid;
-            grid-template-columns: 210px 1fr;
-            gap: 55px;
-            margin-top: 55px;
-        }
-
-        .story-sidebar {
-            position: sticky;
-            top: 25px;
-            height: fit-content;
-        }
-
-        .side-title {
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            margin-bottom: 18px;
-        }
-
-        .side-link {
-            display: block;
-            color: #94a3b8;
-            text-decoration: none;
-            padding: 11px 0;
-            font-size: 14px;
-            transition: 0.2s ease;
-        }
-
-        .side-link:hover {
-            color: white;
-            transform: translateX(4px);
-        }
-
-        .route-box,
-        .article,
-        .tips-box {
-            margin-bottom: 55px;
-        }
-
-        .route-box {
-            padding: 30px;
-            border-radius: 22px;
-            background:
-                rgba(255,255,255,0.045);
-            border: 1px solid
-                rgba(255,255,255,0.08);
-        }
-
-        .content-title {
-            margin: 0 0 25px;
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-            font-size: 30px;
-            color: white;
-        }
-
-        .route-line {
-            position: relative;
-            padding-left: 28px;
-            border-left: 2px solid
-                rgba(99,102,241,0.5);
-        }
-
-        .route-step {
-            position: relative;
-            padding: 13px 15px;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            color: #dbeafe;
-            background:
-                rgba(255,255,255,0.04);
-        }
-
-        .route-step::before {
-            content: "";
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            left: -34px;
-            top: 19px;
-            background: #818cf8;
-            box-shadow:
-                0 0 0 5px
-                rgba(129,140,248,0.12);
-        }
-
-        .article {
-            color: #cbd5e1;
-            font-size: 17px;
-            line-height: 1.9;
-        }
-
-        .article p {
-            margin: 0 0 25px;
-        }
-
-        .article .lead {
-            color: white;
-            font-size: 20px;
-        }
-
-        .tips-box {
-            padding: 30px;
-            border-radius: 22px;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(245,158,11,0.09),
-                    rgba(255,255,255,0.035)
-                );
-            border: 1px solid
-                rgba(245,158,11,0.12);
-        }
-
-        .tip {
-            display: flex;
-            align-items: flex-start;
-            gap: 13px;
-            padding: 14px 0;
-            color: #dbeafe;
-            line-height: 1.6;
-            border-bottom: 1px solid
-                rgba(255,255,255,0.06);
-        }
-
-        .tip:last-child {
-            border-bottom: 0;
-        }
-
-        .tip-icon {
-            flex-shrink: 0;
-            font-size: 20px;
-        }
-
-        .story-end {
-            margin-top: 80px;
-            padding: 55px 30px;
-            text-align: center;
-            border-radius: 25px;
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(79,70,229,0.13),
-                    rgba(14,165,233,0.08)
-                );
-            border: 1px solid
-                rgba(255,255,255,0.08);
-        }
-
-        .story-end-globe {
-            font-size: 48px;
+            font-size: 42px;
             margin-bottom: 15px;
         }
 
-        .story-end h2 {
-            margin: 0;
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-            font-size: 32px;
-            line-height: 1.3;
+        .loading h2 {
+            margin-bottom: 10px;
         }
 
-        .story-end p {
-            max-width: 550px;
-            margin: 18px auto 28px;
-            color: #94a3b8;
-            line-height: 1.7;
+        .loading p {
+            color: #6b7280;
         }
 
-        .share-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 13px 20px;
-            border-radius: 12px;
-            background:
-                linear-gradient(
-                    135deg,
-                    #6366f1,
-                    #06b6d4
-                );
-            color: white;
-            text-decoration: none;
+        .story-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.07);
+        }
+
+        .story-label {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 13px;
             font-weight: 700;
-            box-shadow:
-                0 10px 30px
-                rgba(99,102,241,0.25);
-            transition: 0.2s ease;
+            margin-bottom: 18px;
         }
 
-        .share-button:hover {
-            transform: translateY(-2px);
+        .story-title {
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.15;
+            margin-bottom: 25px;
+            color: #111827;
         }
 
-        /* =====================================================
-           WEBSITE OWNER
-           ===================================================== */
+        .route-box {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .place small {
+            display: block;
+            color: #6b7280;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .place strong {
+            font-size: 20px;
+            color: #111827;
+        }
+
+        .arrow {
+            font-size: 28px;
+            color: #2563eb;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .info-box .label {
+            color: #6b7280;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .info-box .value {
+            color: #111827;
+            font-size: 18px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        .section-content {
+            color: #4b5563;
+            font-size: 16px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .cost {
+            color: #059669 !important;
+            font-weight: 800 !important;
+        }
 
         .website-owner {
-            margin-top: 70px;
-            padding: 35px 20px;
+            margin-top: 40px;
+            padding: 28px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #eff6ff, #f8fafc);
+            border: 1px solid #dbeafe;
             text-align: center;
-            border-top: 1px solid
-                rgba(255,255,255,0.08);
         }
 
         .website-owner-label {
-            margin-bottom: 10px;
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1.7px;
+            font-size: 12px;
+            color: #6b7280;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
         .website-owner-name {
-            margin-bottom: 14px;
-            color: #f8fafc;
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 15px;
         }
 
         .website-owner-contact {
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 18px;
         }
 
         .website-owner-contact a {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 13px;
-            border: 1px solid
-                rgba(255,255,255,0.08);
-            border-radius: 10px;
-            background:
-                rgba(255,255,255,0.035);
-            color: #94a3b8;
-            font-size: 13px;
             text-decoration: none;
-            transition:
-                color 0.2s ease,
-                border-color 0.2s ease,
-                background 0.2s ease,
-                transform 0.2s ease;
+            color: #2563eb;
+            font-weight: 600;
         }
 
         .website-owner-contact a:hover {
-            color: #67e8f9;
-            border-color:
-                rgba(103,232,249,0.25);
-            background:
-                rgba(103,232,249,0.06);
-            transform: translateY(-2px);
+            text-decoration: underline;
         }
 
         .error-box {
-            min-height: 60vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 55px 25px;
             text-align: center;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
         }
 
         .error-icon {
-            font-size: 55px;
+            font-size: 45px;
             margin-bottom: 15px;
         }
 
         .error-box h2 {
-            margin: 0 0 10px;
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #111827;
         }
 
-        .error-box p {
-            color: #94a3b8;
-            max-width: 650px;
-            line-height: 1.7;
-        }
-
-        .error-details {
-            margin-top: 10px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: #cbd5e1;
-            font-family: monospace;
-            font-size: 13px;
+        .error-message {
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 10px;
             word-break: break-word;
-            max-width: 700px;
         }
 
-        @media (max-width: 800px) {
-
-            .story-hero {
-                padding: 45px 28px;
-                min-height: 340px;
-            }
-
-            .floating-globe {
-                font-size: 80px;
-                right: 20px;
-                bottom: 20px;
-            }
-
-            .trip-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .story-layout {
-                grid-template-columns: 1fr;
-                gap: 10px;
-                margin-top: 35px;
-            }
-
-            .story-sidebar {
-                position: static;
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                gap: 10px;
-            }
-
-            .side-title {
-                width: 100%;
-                margin-bottom: 0;
-            }
-
-            .side-link {
-                padding: 8px 12px;
-                border-radius: 10px;
-                background:
-                    rgba(255,255,255,0.05);
-            }
-
+        .error-id {
+            color: #6b7280;
+            margin-bottom: 25px;
         }
 
-        @media (max-width: 500px) {
+        .back-button {
+            display: inline-block;
+            background: #2563eb;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+        }
 
-            .story-page {
-                width: 94%;
+        .back-button:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 700px) {
+            .topbar {
+                padding: 16px 5%;
             }
 
-            .story-navbar {
-                height: 70px;
+            .container {
+                margin: 25px auto;
             }
 
-            .story-hero {
-                border-radius: 22px;
-                padding: 35px 22px;
+            .story-card {
+                padding: 24px;
+                border-radius: 18px;
             }
 
-            .story-hero h1 {
-                font-size: 42px;
-                letter-spacing: -1px;
+            .route-box {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            .story-subtitle {
-                font-size: 16px;
+            .arrow {
+                transform: rotate(90deg);
             }
 
-            .floating-globe {
-                opacity: 0.08;
-            }
-
-            .route-box,
-            .tips-box {
-                padding: 22px;
-            }
-
-            .content-title {
-                font-size: 26px;
-            }
-
-            .website-owner {
-                margin-top: 50px;
-                padding: 30px 10px;
+            .info-grid {
+                grid-template-columns: 1fr;
             }
 
             .website-owner-contact {
                 flex-direction: column;
-                gap: 9px;
+                gap: 10px;
             }
-
-            .website-owner-contact a {
-                width: 100%;
-                justify-content: center;
-            }
-
         }
-
     </style>
-
 </head>
 
 <body>
 
-<div class="story-page">
+<header class="topbar">
+    <a href="index.html" class="brand">
+        ✦<span>TravelStories</span>
+    </a>
 
-    <nav class="story-navbar">
+    <a href="index.html" class="back-link">
+        ← Back
+    </a>
+</header>
 
-        <a
-            href="index.html"
-            class="story-logo"
-        >
+<main class="container">
 
-            <span class="story-logo-icon">
-                ✦
-            </span>
+    <div id="loading" class="loading">
+        <div class="loading-icon">⏳</div>
+        <h2>Loading your story...</h2>
+        <p>Please wait while we fetch the travel story.</p>
+    </div>
 
-            <span>
-                TravelStories
-            </span>
+    <div id="error" class="error-box" style="display:none;">
+        <div class="error-icon">😕</div>
 
+        <h2>Unable to load this story</h2>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <div class="error-id">
+            Story ID: <strong id="errorStoryId"></strong>
+        </div>
+
+        <a href="index.html" class="back-button">
+            ← Back to TravelStories
         </a>
+    </div>
 
-        <a
-            href="index.html"
-            class="back-home"
-        >
-            ← Back
-        </a>
+    <article id="storyContainer" class="story-card" style="display:none;">
 
-    </nav>
+        <div class="story-label">
+            ✈️ Travel Story
+        </div>
 
-    <div id="storyPage">
+        <h1 id="storyTitle" class="story-title"></h1>
 
-        <div class="loading">
+        <div class="route-box">
 
-            <div class="loading-icon">
-                🌍
+            <div class="place">
+                <small>Starting From</small>
+                <strong id="storyStart"></strong>
             </div>
 
-            <h2>
-                Loading travel story...
-            </h2>
+            <div class="arrow">
+                →
+            </div>
 
-            <p>
-                Please wait while we bring the journey to you.
-            </p>
+            <div class="place">
+                <small>Destination</small>
+                <strong id="storyDestination"></strong>
+            </div>
 
         </div>
 
-    </div>
+        <div class="info-grid">
 
-</div>
+            <div class="info-box">
+                <div class="label">Transport</div>
+                <div id="storyTransport" class="value"></div>
+            </div>
 
+            <div class="info-box">
+                <div class="label">Total Cost</div>
+                <div id="storyCost" class="value cost"></div>
+            </div>
+
+        </div>
+
+        <section class="section">
+            <h2>🗺️ Route</h2>
+            <div id="storyRoute" class="section-content"></div>
+        </section>
+
+        <section class="section">
+            <h2>✨ My Experience</h2>
+            <div id="storyExperience" class="section-content"></div>
+        </section>
+
+        <section id="tipsSection" class="section">
+            <h2>💡 Travel Tips</h2>
+            <div id="storyTips" class="section-content"></div>
+        </section>
+
+        <section class="website-owner">
+
+            <div class="website-owner-label">
+                Created &amp; Managed By
+            </div>
+
+            <div class="website-owner-name">
+                Gaikwad Vikas Tejerao
+            </div>
+
+            <div class="website-owner-contact">
+
+                <a href="mailto:vikasgaikwad787@gmail.com">
+                    ✉️ <span>vikasgaikwad787@gmail.com</span>
+                </a>
+
+                <a href="tel:+918482852294">
+                    📞 <span>8482852294</span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </article>
+
+</main>
 
 <script>
 
-    /* =====================================================
-       LIVE TRAVELSTORIES API
-    ===================================================== */
-
+    /*
+        IMPORTANT:
+        This is the PUBLIC Render backend.
+        Do not change this to localhost.
+    */
     const API_URL =
         "https://travelstories-backend.onrender.com/api/stories";
 
 
-    /* =====================================================
-       READ STORY ID
-    ===================================================== */
+    function getStoryId() {
 
-    const params =
-        new URLSearchParams(
+        const params = new URLSearchParams(
             window.location.search
         );
 
-    const storyId =
-        params.get("id");
+        return params.get("id");
+    }
 
-    const storyPage =
-        document.getElementById(
-            "storyPage"
-        );
-
-
-    /* =====================================================
-       ESCAPE HTML
-    ===================================================== */
 
     function escapeHTML(value) {
 
-        if (
-            value === null ||
-            value === undefined
-        ) {
+        if (value === null || value === undefined) {
             return "";
         }
 
         return String(value)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
     }
 
 
-    /* =====================================================
-       CREATE ROUTE
-    ===================================================== */
+    function formatCurrency(value) {
 
-    function createRoute(route) {
+        const number = Number(value);
 
-        const lines =
-            String(route || "")
-                .split(/\n/)
-                .map(line => line.trim())
-                .filter(Boolean);
-
-        if (lines.length === 0) {
-
-            return `
-                <div class="route-step">
-                    Route information not provided.
-                </div>
-            `;
-
+        if (Number.isNaN(number)) {
+            return "₹0";
         }
 
-        return lines
-            .map(line => {
-
-                if (
-                    line === "↓" ||
-                    line === "→"
-                ) {
-                    return "";
-                }
-
-                return `
-                    <div class="route-step">
-                        ${escapeHTML(line)}
-                    </div>
-                `;
-
-            })
-            .join("");
-
+        return "₹" + number.toLocaleString("en-IN");
     }
 
 
-    /* =====================================================
-       CREATE EXPERIENCE
-    ===================================================== */
+    function showError(message, storyId) {
 
-    function createExperience(text) {
+        document.getElementById("loading").style.display = "none";
 
-        const paragraphs =
-            String(text || "")
-                .split(/\n\s*\n/)
-                .map(paragraph => paragraph.trim())
-                .filter(Boolean);
+        document.getElementById("storyContainer").style.display = "none";
 
-        if (paragraphs.length === 0) {
+        document.getElementById("error").style.display = "block";
 
-            return `
-                <p>
-                    No journey experience was provided.
-                </p>
-            `;
+        document.getElementById("errorMessage").textContent =
+            message;
 
-        }
-
-        return paragraphs
-            .map((paragraph, index) => {
-
-                return `
-                    <p class="${
-                        index === 0
-                            ? "lead"
-                            : ""
-                    }">
-                        ${escapeHTML(paragraph)}
-                    </p>
-                `;
-
-            })
-            .join("");
-
+        document.getElementById("errorStoryId").textContent =
+            storyId || "Not provided";
     }
 
 
-    /* =====================================================
-       CREATE TIPS
-    ===================================================== */
+    function showStory(story) {
 
-    function createTips(text) {
+        document.getElementById("loading").style.display = "none";
 
-        const tips =
-            String(text || "")
-                .split(/\n/)
-                .map(
-                    tip =>
-                        tip
-                            .replace(/^•\s*/, "")
-                            .trim()
-                )
-                .filter(Boolean);
+        document.getElementById("error").style.display = "none";
 
-        if (tips.length === 0) {
+        document.getElementById("storyContainer").style.display = "block";
 
-            return `
-                <div class="tip">
 
-                    <span class="tip-icon">
-                        💡
-                    </span>
+        document.getElementById("storyTitle").textContent =
+            story.title || "Untitled Story";
 
-                    <span>
-                        No additional tips were provided.
-                    </span>
 
-                </div>
-            `;
+        document.getElementById("storyStart").textContent =
+            story.start || "Unknown";
+
+
+        document.getElementById("storyDestination").textContent =
+            story.destination || "Unknown";
+
+
+        document.getElementById("storyTransport").textContent =
+            story.transport || "Not specified";
+
+
+        document.getElementById("storyCost").textContent =
+            formatCurrency(story.cost);
+
+
+        document.getElementById("storyRoute").textContent =
+            story.route || "No route information available.";
+
+
+        document.getElementById("storyExperience").textContent =
+            story.experience || "No experience information available.";
+
+
+        const tipsSection =
+            document.getElementById("tipsSection");
+
+
+        if (story.tips && String(story.tips).trim()) {
+
+            document.getElementById("storyTips").textContent =
+                story.tips;
+
+            tipsSection.style.display = "block";
+
+        } else {
+
+            tipsSection.style.display = "none";
 
         }
 
-        return tips
-            .map(tip => {
 
-                return `
-                    <div class="tip">
-
-                        <span class="tip-icon">
-                            💡
-                        </span>
-
-                        <span>
-                            ${escapeHTML(tip)}
-                        </span>
-
-                    </div>
-                `;
-
-            })
-            .join("");
-
+        document.title =
+            (story.title || "Travel Story") +
+            " | TravelStories";
     }
 
-
-    /* =====================================================
-       FORMAT DATE
-    ===================================================== */
-
-    function formatDate(dateValue) {
-
-        if (!dateValue) {
-            return "Recently";
-        }
-
-        const date =
-            new Date(dateValue);
-
-        if (
-            Number.isNaN(
-                date.getTime()
-            )
-        ) {
-            return "Recently";
-        }
-
-        return date.toLocaleDateString(
-            "en-IN",
-            {
-                day: "numeric",
-                month: "short",
-                year: "numeric"
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       LOAD SINGLE STORY
-    ===================================================== */
 
     async function loadStory() {
 
+        const storyId = getStoryId();
+
+
         if (!storyId) {
 
-            storyPage.innerHTML = `
-
-                <div class="error-box">
-
-                    <div class="error-icon">
-                        🔎
-                    </div>
-
-                    <h2>
-                        Story ID missing
-                    </h2>
-
-                    <p>
-                        This story link does not contain
-                        a valid story ID.
-                    </p>
-
-                    <a
-                        href="index.html"
-                        class="share-button"
-                    >
-                        ← Back to TravelStories
-                    </a>
-
-                </div>
-
-            `;
+            showError(
+                "No story ID was provided in the URL.",
+                "Missing"
+            );
 
             return;
-
         }
 
 
-        if (!/^\d+$/.test(storyId)) {
-
-            storyPage.innerHTML = `
-
-                <div class="error-box">
-
-                    <div class="error-icon">
-                        ⚠️
-                    </div>
-
-                    <h2>
-                        Invalid Story ID
-                    </h2>
-
-                    <p>
-                        The story ID in this URL is not valid.
-                    </p>
-
-                    <a
-                        href="index.html"
-                        class="share-button"
-                    >
-                        ← Back to TravelStories
-                    </a>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
+        /*
+            Cache-busting parameter:
+            This makes sure the browser does not reuse
+            an old API response.
+        */
+        const requestURL =
+            API_URL +
+            "/" +
+            encodeURIComponent(storyId) +
+            "?_=" +
+            Date.now();
 
 
         try {
 
-            const requestURL =
-                API_URL +
-                "/" +
-                encodeURIComponent(storyId) +
-                "?_=" +
-                Date.now();
-
-
-            console.log(
-                "Loading story from:",
-                requestURL
-            );
+            console.log("Loading story from:");
+            console.log(requestURL);
 
 
             const response =
@@ -1085,421 +597,77 @@
                         mode: "cors",
                         cache: "no-store",
                         headers: {
-                            "Accept":
-                                "application/json"
+                            "Accept": "application/json"
                         }
                     }
                 );
 
 
-            console.log(
-                "Story API status:",
-                response.status
-            );
-
-
             if (!response.ok) {
-
-                let errorMessage =
-                    "Story could not be loaded.";
-
-
-                try {
-
-                    const errorResult =
-                        await response.json();
-
-                    if (
-                        errorResult &&
-                        errorResult.message
-                    ) {
-                        errorMessage =
-                            errorResult.message;
-                    }
-
-                } catch {
-
-                    // Ignore JSON parsing errors.
-
-                }
-
 
                 throw new Error(
                     "HTTP " +
                     response.status +
                     ": " +
-                    errorMessage
+                    response.statusText
                 );
 
             }
 
 
-            const result =
+            const data =
                 await response.json();
 
 
-            console.log(
-                "Story API response:",
-                result
-            );
+            console.log("API response:", data);
 
 
-            if (
-                !result ||
-                !result.success ||
-                !result.story
-            ) {
+            if (!data || !data.success) {
 
                 throw new Error(
-                    "Invalid story data received from the server."
+                    data && data.message
+                        ? data.message
+                        : "The server did not return a valid story."
                 );
 
             }
 
 
-            const story =
-                result.story;
+            if (!data.story) {
 
+                throw new Error(
+                    "The server returned success but no story data."
+                );
 
-            document.title =
-                String(
-                    story.title ||
-                    "Travel Story"
-                ) +
-                " — TravelStories";
+            }
 
 
-            storyPage.innerHTML = `
+            showStory(data.story);
 
-                <section class="story-hero">
-
-                    <div class="hero-glow"></div>
-
-                    <div class="hero-content">
-
-                        <div class="story-category">
-                            🌍 REAL TRAVEL EXPERIENCE
-                        </div>
-
-                        <h1>
-
-                            ${escapeHTML(
-                                story.start ||
-                                "Unknown"
-                            )}
-
-                            <span>
-
-                                →
-                                ${escapeHTML(
-                                    story.destination ||
-                                    "Unknown"
-                                )}
-
-                            </span>
-
-                        </h1>
-
-                        <p class="story-subtitle">
-
-                            ${escapeHTML(
-                                story.title ||
-                                "Untitled Travel Story"
-                            )}
-
-                        </p>
-
-                    </div>
-
-                    <div
-                        class="floating-globe"
-                        aria-hidden="true"
-                    >
-                        🌍
-                    </div>
-
-                </section>
-
-
-                <section class="trip-stats">
-
-                    <div class="stat-card">
-
-                        <div class="stat-icon">
-                            🚌
-                        </div>
-
-                        <span class="stat-label">
-                            Transport
-                        </span>
-
-                        <span class="stat-value">
-                            ${escapeHTML(
-                                story.transport ||
-                                "Not specified"
-                            )}
-                        </span>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <div class="stat-icon">
-                            💰
-                        </div>
-
-                        <span class="stat-label">
-                            Travel Cost
-                        </span>
-
-                        <span class="stat-value">
-                            ₹${Number(
-                                story.cost || 0
-                            ).toLocaleString(
-                                "en-IN"
-                            )}
-                        </span>
-
-                    </div>
-
-
-                    <div class="stat-card">
-
-                        <div class="stat-icon">
-                            📅
-                        </div>
-
-                        <span class="stat-label">
-                            Shared
-                        </span>
-
-                        <span class="stat-value">
-                            ${formatDate(
-                                story.createdAt
-                            )}
-                        </span>
-
-                    </div>
-
-                </section>
-
-
-                <section class="story-layout">
-
-                    <aside class="story-sidebar">
-
-                        <div class="side-title">
-                            THIS JOURNEY
-                        </div>
-
-                        <a
-                            href="#route"
-                            class="side-link"
-                        >
-                            🗺️ Route
-                        </a>
-
-                        <a
-                            href="#experience"
-                            class="side-link"
-                        >
-                            ✍️ Experience
-                        </a>
-
-                        <a
-                            href="#tips"
-                            class="side-link"
-                        >
-                            💡 Tips
-                        </a>
-
-                    </aside>
-
-
-                    <main>
-
-                        <section
-                            id="route"
-                            class="route-box"
-                        >
-
-                            <h2 class="content-title">
-                                🗺️ The Route
-                            </h2>
-
-                            <div class="route-line">
-                                ${createRoute(
-                                    story.route
-                                )}
-                            </div>
-
-                        </section>
-
-
-                        <article
-                            id="experience"
-                            class="article"
-                        >
-
-                            <h2 class="content-title">
-                                ✍️ The Journey
-                            </h2>
-
-                            ${createExperience(
-                                story.experience
-                            )}
-
-                        </article>
-
-
-                        <section
-                            id="tips"
-                            class="tips-box"
-                        >
-
-                            <h2 class="content-title">
-                                💡 Tips for the Next Traveler
-                            </h2>
-
-                            ${createTips(
-                                story.tips
-                            )}
-
-                        </section>
-
-
-                        <section class="story-end">
-
-                            <div class="story-end-globe">
-                                🌍
-                            </div>
-
-                            <h2>
-                                One journey.
-                                <br>
-                                Someone else's shortcut.
-                            </h2>
-
-                            <p>
-                                This story was shared
-                                to help another traveler
-                                save time, money and confusion.
-                            </p>
-
-                            <a
-                                href="create-story.html"
-                                class="share-button"
-                            >
-                                + Share Your Journey
-                            </a>
-
-                        </section>
-
-                    </main>
-
-                </section>
-
-
-                <section class="website-owner">
-
-                    <div class="website-owner-label">
-                        Created &amp; Managed By
-                    </div>
-
-                    <div class="website-owner-name">
-                        Gaikwad Vikas Tejerao
-                    </div>
-
-                    <div class="website-owner-contact">
-
-                        <a
-                            href="mailto:vikasgaikwad787@gmail.com"
-                        >
-                            ✉️
-                            <span>
-                                vikasgaikwad787@gmail.com
-                            </span>
-                        </a>
-
-                        <a
-                            href="tel:+918482852294"
-                        >
-                            📞
-                            <span>
-                                8482852294
-                            </span>
-                        </a>
-
-                    </div>
-
-                </section>
-
-            `;
 
         } catch (error) {
 
             console.error(
-                "Story loading error:",
+                "TravelStories API error:",
                 error
             );
 
 
-            storyPage.innerHTML = `
-
-                <div class="error-box">
-
-                    <div class="error-icon">
-                        😕
-                    </div>
-
-                    <h2>
-                        Unable to load this story
-                    </h2>
-
-                    <p>
-                        Something went wrong while
-                        connecting to the TravelStories API.
-                    </p>
-
-                    <div class="error-details">
-                        ${escapeHTML(
-                            error.message ||
-                            "Unknown error"
-                        )}
-                    </div>
-
-                    <p>
-                        Story ID:
-                        <strong>
-                            ${escapeHTML(storyId)}
-                        </strong>
-                    </p>
-
-                    <a
-                        href="index.html"
-                        class="share-button"
-                    >
-                        ← Back to TravelStories
-                    </a>
-
-                </div>
-
-            `;
+            showError(
+                error && error.message
+                    ? error.message
+                    : "Unknown error while loading the story.",
+                storyId
+            );
 
         }
 
     }
 
 
-    /* =====================================================
-       START
-    ===================================================== */
-
     loadStory();
 
 </script>
 
 </body>
-
-</html>
+</html
