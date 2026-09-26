@@ -1,11 +1,12 @@
-
-const path = require("path");
+```javascript
 const dotenv = require("dotenv");
 const sql = require("mssql");
 
+// Load .env locally.
+// Render environment variables remain available when .env is not present.
 dotenv.config({
-    path: path.join(__dirname, ".env"),
-    override: true
+    path: require("path").join(__dirname, ".env"),
+    override: false
 });
 
 const config = {
@@ -15,8 +16,7 @@ const config = {
     password: process.env.DB_PASSWORD,
 
     options: {
-        instanceName: process.env.DB_INSTANCE,
-        encrypt: false,
+        encrypt: true,
         trustServerCertificate: true
     },
 
@@ -33,6 +33,29 @@ async function connectDatabase() {
     try {
         if (pool && pool.connected) {
             return pool;
+        }
+
+        // Helpful configuration check without exposing the password
+        console.log("Database configuration:");
+        console.log("Server:", process.env.DB_SERVER);
+        console.log("Database:", process.env.DB_DATABASE);
+        console.log("User:", process.env.DB_USER);
+        console.log("Password configured:", Boolean(process.env.DB_PASSWORD));
+
+        if (!process.env.DB_SERVER) {
+            throw new Error("DB_SERVER is missing.");
+        }
+
+        if (!process.env.DB_DATABASE) {
+            throw new Error("DB_DATABASE is missing.");
+        }
+
+        if (!process.env.DB_USER) {
+            throw new Error("DB_USER is missing.");
+        }
+
+        if (!process.env.DB_PASSWORD) {
+            throw new Error("DB_PASSWORD is missing.");
         }
 
         pool = await sql.connect(config);
@@ -85,4 +108,4 @@ module.exports = {
     connectDatabase,
     initializeDatabase
 };
-
+```
