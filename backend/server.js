@@ -1,20 +1,14 @@
-
-const express = require("express");
+﻿const express = require("express");
 const cors = require("cors");
 
 const {
-    sql,
+    pool,
     connectDatabase,
     initializeDatabase
 } = require("./database");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-
-// =====================================================
-// MIDDLEWARE
-// =====================================================
 
 app.use(cors());
 app.use(express.json());
@@ -42,34 +36,33 @@ app.get("/api/stories", async (req, res) => {
 
     try {
 
-        const db = await connectDatabase();
+        const result = await pool.query(`
+            SELECT
+                id,
+                title,
+                start_place AS start,
+                destination,
+                transport,
+                cost,
+                route,
+                experience,
+                tips,
+                created_at AS "createdAt"
+            FROM stories
+            ORDER BY created_at DESC
+        `);
 
-        const query =
-            "SELECT " +
-            "Id AS id, " +
-            "Title AS title, " +
-            "StartPlace AS start, " +
-            "Destination AS destination, " +
-            "Transport AS transport, " +
-            "Cost AS cost, " +
-            "Route AS route, " +
-            "Experience AS experience, " +
-            "Tips AS tips, " +
-            "CreatedAt AS createdAt " +
-            "FROM dbo.Stories " +
-            "ORDER BY CreatedAt DESC";
+        const stories = result.rows.map(story => ({
+            ...story,
+            id: Number(story.id),
+            cost: Number(story.cost)
+        }));
 
-        const result =
-            await db.request().query(query);
-
-        res.json(result.recordset);
+        res.json(stories);
 
     } catch (error) {
 
-        console.error(
-            "Get stories error:",
-            error.message
-        );
+        console.error("Get stories error:", error.message);
 
         res.status(500).json({
             success: false,
@@ -89,8 +82,7 @@ app.get("/api/stories/:id", async (req, res) => {
 
     try {
 
-        const id =
-            Number(req.params.id);
+        const id = Number(req.params.id);
 
         if (!Number.isFinite(id)) {
 
@@ -101,35 +93,23 @@ app.get("/api/stories/:id", async (req, res) => {
 
         }
 
-        const db =
-            await connectDatabase();
+        const result = await pool.query(`
+            SELECT
+                id,
+                title,
+                start_place AS start,
+                destination,
+                transport,
+                cost,
+                route,
+                experience,
+                tips,
+                created_at AS "createdAt"
+            FROM stories
+            WHERE id = $1
+        `, [id]);
 
-        const query =
-            "SELECT " +
-            "Id AS id, " +
-            "Title AS title, " +
-            "StartPlace AS start, " +
-            "Destination AS destination, " +
-            "Transport AS transport, " +
-            "Cost AS cost, " +
-            "Route AS route, " +
-            "Experience AS experience, " +
-            "Tips AS tips, " +
-            "CreatedAt AS createdAt " +
-            "FROM dbo.Stories " +
-            "WHERE Id = @Id";
-
-        const result =
-            await db
-                .request()
-                .input(
-                    "Id",
-                    sql.BigInt,
-                    id
-                )
-                .query(query);
-
-        if (result.recordset.length === 0) {
+        if (result.rows.length === 0) {
 
             return res.status(404).json({
                 success: false,
@@ -138,17 +118,20 @@ app.get("/api/stories/:id", async (req, res) => {
 
         }
 
+        const story = {
+            ...result.rows[0],
+            id: Number(result.rows[0].id),
+            cost: Number(result.rows[0].cost)
+        };
+
         res.json({
             success: true,
-            story: result.recordset[0]
+            story
         });
 
     } catch (error) {
 
-        console.error(
-            "Get story error:",
-            error.message
-        );
+        console.error("Get story error:", error.message);
 
         res.status(500).json({
             success: false,
@@ -179,11 +162,6 @@ app.post("/api/stories", async (req, res) => {
             tips
         } = req.body;
 
-
-        // ---------------------------------------------
-        // REQUIRED FIELD VALIDATION
-        // ---------------------------------------------
-
         if (
             !title ||
             !start ||
@@ -202,13 +180,7 @@ app.post("/api/stories", async (req, res) => {
 
         }
 
-
-        // ---------------------------------------------
-        // COST VALIDATION
-        // ---------------------------------------------
-
-        const numericCost =
-            Number(cost);
+        const numericCost = Number(cost);
 
         if (
             !Number.isFinite(numericCost) ||
@@ -222,128 +194,72 @@ app.post("/api/stories", async (req, res) => {
 
         }
 
+        const id = Date.now();
 
-        const db =
-            await connectDatabase();
-
-
-        // ---------------------------------------------
-        // GENERATE STORY ID
-        // ---------------------------------------------
-
-        const id =
-            Date.now();
-
-
-        // ---------------------------------------------
-        // INSERT STORY
-        // ---------------------------------------------
-
-        const query =
-            "INSERT INTO dbo.Stories " +
-            "(Id, Title, StartPlace, Destination, Transport, Cost, Route, Experience, Tips) " +
-            "VALUES " +
-            "(@Id, @Title, @StartPlace, @Destination, @Transport, @Cost, @Route, @Experience, @Tips)";
-
-
-        await db
-            .request()
-
-            .input(
-                "Id",
-                sql.BigInt,
-                id
-            )
-
-            .input(
-                "Title",
-                sql.NVarChar(300),
-                String(title).trim()
-            )
-
-            .input(
-                "StartPlace",
-                sql.NVarChar(200),
-                String(start).trim()
-            )
-
-            .input(
-                "Destination",
-                sql.NVarChar(200),
-                String(destination).trim()
-            )
-
-            .input(
-                "Transport",
-                sql.NVarChar(200),
-                String(transport).trim()
-            )
-
-            .input(
-                "Cost",
-                sql.Decimal(10, 2),
-                numericCost
-            )
-
-            .input(
-                "Route",
-                sql.NVarChar(sql.MAX),
-                String(route).trim()
-            )
-
-            .input(
-                "Experience",
-                sql.NVarChar(sql.MAX),
-                String(experience).trim()
-            )
-
-            .input(
-                "Tips",
-                sql.NVarChar(sql.MAX),
+        await pool.query(`
+            INSERT INTO stories
+            (
+                id,
+                title,
+                start_place,
+                destination,
+                transport,
+                cost,
+                route,
+                experience,
                 tips
-                    ? String(tips).trim()
-                    : null
             )
-
-            .query(query);
-
+            VALUES
+            (
+                $1,
+                $2,
+                $3,
+                $4,
+                $5,
+                $6,
+                $7,
+                $8,
+                $9
+            )
+        `, [
+            id,
+            String(title).trim(),
+            String(start).trim(),
+            String(destination).trim(),
+            String(transport).trim(),
+            numericCost,
+            String(route).trim(),
+            String(experience).trim(),
+            tips ? String(tips).trim() : null
+        ]);
 
         res.status(201).json({
 
             success: true,
 
-            message:
-                "Travel story published successfully!",
+            message: "Travel story published successfully!",
 
             story: {
 
                 id,
 
-                title:
-                    String(title).trim(),
+                title: String(title).trim(),
 
-                start:
-                    String(start).trim(),
+                start: String(start).trim(),
 
-                destination:
-                    String(destination).trim(),
+                destination: String(destination).trim(),
 
-                transport:
-                    String(transport).trim(),
+                transport: String(transport).trim(),
 
-                cost:
-                    numericCost,
+                cost: numericCost,
 
-                route:
-                    String(route).trim(),
+                route: String(route).trim(),
 
-                experience:
-                    String(experience).trim(),
+                experience: String(experience).trim(),
 
-                tips:
-                    tips
-                        ? String(tips).trim()
-                        : ""
+                tips: tips
+                    ? String(tips).trim()
+                    : ""
 
             }
 
@@ -351,10 +267,7 @@ app.post("/api/stories", async (req, res) => {
 
     } catch (error) {
 
-        console.error(
-            "Create story error:",
-            error.message
-        );
+        console.error("Create story error:", error.message);
 
         res.status(500).json({
             success: false,
@@ -374,13 +287,7 @@ app.put("/api/stories/:id", async (req, res) => {
 
     try {
 
-        const id =
-            Number(req.params.id);
-
-
-        // ---------------------------------------------
-        // ID VALIDATION
-        // ---------------------------------------------
+        const id = Number(req.params.id);
 
         if (!Number.isFinite(id)) {
 
@@ -390,7 +297,6 @@ app.put("/api/stories/:id", async (req, res) => {
             });
 
         }
-
 
         const {
             title,
@@ -402,11 +308,6 @@ app.put("/api/stories/:id", async (req, res) => {
             experience,
             tips
         } = req.body;
-
-
-        // ---------------------------------------------
-        // REQUIRED FIELD VALIDATION
-        // ---------------------------------------------
 
         if (
             !title ||
@@ -426,13 +327,7 @@ app.put("/api/stories/:id", async (req, res) => {
 
         }
 
-
-        // ---------------------------------------------
-        // COST VALIDATION
-        // ---------------------------------------------
-
-        const numericCost =
-            Number(cost);
+        const numericCost = Number(cost);
 
         if (
             !Number.isFinite(numericCost) ||
@@ -446,98 +341,31 @@ app.put("/api/stories/:id", async (req, res) => {
 
         }
 
+        const result = await pool.query(`
+            UPDATE stories
+            SET
+                title = $1,
+                start_place = $2,
+                destination = $3,
+                transport = $4,
+                cost = $5,
+                route = $6,
+                experience = $7,
+                tips = $8
+            WHERE id = $9
+        `, [
+            String(title).trim(),
+            String(start).trim(),
+            String(destination).trim(),
+            String(transport).trim(),
+            numericCost,
+            String(route).trim(),
+            String(experience).trim(),
+            tips ? String(tips).trim() : null,
+            id
+        ]);
 
-        const db =
-            await connectDatabase();
-
-
-        // ---------------------------------------------
-        // UPDATE QUERY
-        // ---------------------------------------------
-
-        const query =
-            "UPDATE dbo.Stories SET " +
-            "Title = @Title, " +
-            "StartPlace = @StartPlace, " +
-            "Destination = @Destination, " +
-            "Transport = @Transport, " +
-            "Cost = @Cost, " +
-            "Route = @Route, " +
-            "Experience = @Experience, " +
-            "Tips = @Tips " +
-            "WHERE Id = @Id";
-
-
-        const result =
-            await db
-                .request()
-
-                .input(
-                    "Id",
-                    sql.BigInt,
-                    id
-                )
-
-                .input(
-                    "Title",
-                    sql.NVarChar(300),
-                    String(title).trim()
-                )
-
-                .input(
-                    "StartPlace",
-                    sql.NVarChar(200),
-                    String(start).trim()
-                )
-
-                .input(
-                    "Destination",
-                    sql.NVarChar(200),
-                    String(destination).trim()
-                )
-
-                .input(
-                    "Transport",
-                    sql.NVarChar(200),
-                    String(transport).trim()
-                )
-
-                .input(
-                    "Cost",
-                    sql.Decimal(10, 2),
-                    numericCost
-                )
-
-                .input(
-                    "Route",
-                    sql.NVarChar(sql.MAX),
-                    String(route).trim()
-                )
-
-                .input(
-                    "Experience",
-                    sql.NVarChar(sql.MAX),
-                    String(experience).trim()
-                )
-
-                .input(
-                    "Tips",
-                    sql.NVarChar(sql.MAX),
-                    tips
-                        ? String(tips).trim()
-                        : null
-                )
-
-                .query(query);
-
-
-        // ---------------------------------------------
-        // STORY NOT FOUND
-        // ---------------------------------------------
-
-        if (
-            result.rowsAffected[0] === 0
-        ) {
+        if (result.rowCount === 0) {
 
             return res.status(404).json({
                 success: false,
@@ -546,47 +374,33 @@ app.put("/api/stories/:id", async (req, res) => {
 
         }
 
-
-        // ---------------------------------------------
-        // SUCCESS
-        // ---------------------------------------------
-
         res.json({
 
             success: true,
 
-            message:
-                "Travel story updated successfully!",
+            message: "Travel story updated successfully!",
 
             story: {
 
                 id,
 
-                title:
-                    String(title).trim(),
+                title: String(title).trim(),
 
-                start:
-                    String(start).trim(),
+                start: String(start).trim(),
 
-                destination:
-                    String(destination).trim(),
+                destination: String(destination).trim(),
 
-                transport:
-                    String(transport).trim(),
+                transport: String(transport).trim(),
 
-                cost:
-                    numericCost,
+                cost: numericCost,
 
-                route:
-                    String(route).trim(),
+                route: String(route).trim(),
 
-                experience:
-                    String(experience).trim(),
+                experience: String(experience).trim(),
 
-                tips:
-                    tips
-                        ? String(tips).trim()
-                        : ""
+                tips: tips
+                    ? String(tips).trim()
+                    : ""
 
             }
 
@@ -594,10 +408,7 @@ app.put("/api/stories/:id", async (req, res) => {
 
     } catch (error) {
 
-        console.error(
-            "Update story error:",
-            error.message
-        );
+        console.error("Update story error:", error.message);
 
         res.status(500).json({
             success: false,
@@ -617,9 +428,7 @@ app.delete("/api/stories/:id", async (req, res) => {
 
     try {
 
-        const id =
-            Number(req.params.id);
-
+        const id = Number(req.params.id);
 
         if (!Number.isFinite(id)) {
 
@@ -630,31 +439,12 @@ app.delete("/api/stories/:id", async (req, res) => {
 
         }
 
+        const result = await pool.query(`
+            DELETE FROM stories
+            WHERE id = $1
+        `, [id]);
 
-        const db =
-            await connectDatabase();
-
-
-        const query =
-            "DELETE FROM dbo.Stories WHERE Id = @Id";
-
-
-        const result =
-            await db
-                .request()
-
-                .input(
-                    "Id",
-                    sql.BigInt,
-                    id
-                )
-
-                .query(query);
-
-
-        if (
-            result.rowsAffected[0] === 0
-        ) {
+        if (result.rowCount === 0) {
 
             return res.status(404).json({
                 success: false,
@@ -663,7 +453,6 @@ app.delete("/api/stories/:id", async (req, res) => {
 
         }
 
-
         res.json({
             success: true,
             message: "Travel story deleted successfully."
@@ -671,10 +460,7 @@ app.delete("/api/stories/:id", async (req, res) => {
 
     } catch (error) {
 
-        console.error(
-            "Delete story error:",
-            error.message
-        );
+        console.error("Delete story error:", error.message);
 
         res.status(500).json({
             success: false,
@@ -716,7 +502,6 @@ async function startServer() {
 
         await initializeDatabase();
 
-
         app.listen(PORT, () => {
 
             console.log("");
@@ -725,8 +510,7 @@ async function startServer() {
             console.log("======================================");
 
             console.log(
-                "Server running on port " +
-                PORT
+                "Server running on port " + PORT
             );
 
             console.log(
@@ -736,7 +520,7 @@ async function startServer() {
             );
 
             console.log(
-                "SQL Server: Connected"
+                "Database: Neon PostgreSQL"
             );
 
             console.log("");
@@ -746,28 +530,14 @@ async function startServer() {
     } catch (error) {
 
         console.error("");
-        console.error(
-            "TravelStories could not start."
-        );
-
-        console.error(
-            "Check your SQL Server configuration."
-        );
-
+        console.error("TravelStories could not start.");
         console.error("");
-
-        console.error(
-            error.message
-        );
-
+        console.error(error.message);
         console.error("");
 
         process.exit(1);
-
     }
 
 }
 
-
 startServer();
-
