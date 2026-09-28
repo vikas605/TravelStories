@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 
@@ -55,7 +56,7 @@ app.get("/api/stories", async (req, res) => {
             "Experience AS experience, " +
             "Tips AS tips, " +
             "CreatedAt AS createdAt " +
-            "FROM Stories " +
+            "FROM dbo.Stories " +
             "ORDER BY CreatedAt DESC";
 
         const result =
@@ -71,12 +72,8 @@ app.get("/api/stories", async (req, res) => {
         );
 
         res.status(500).json({
-
             success: false,
-
-            message:
-                "Unable to load travel stories."
-
+            message: "Unable to load travel stories."
         });
 
     }
@@ -98,12 +95,8 @@ app.get("/api/stories/:id", async (req, res) => {
         if (!Number.isFinite(id)) {
 
             return res.status(400).json({
-
                 success: false,
-
-                message:
-                    "Invalid story ID."
-
+                message: "Invalid story ID."
             });
 
         }
@@ -123,7 +116,7 @@ app.get("/api/stories/:id", async (req, res) => {
             "Experience AS experience, " +
             "Tips AS tips, " +
             "CreatedAt AS createdAt " +
-            "FROM Stories " +
+            "FROM dbo.Stories " +
             "WHERE Id = @Id";
 
         const result =
@@ -136,28 +129,18 @@ app.get("/api/stories/:id", async (req, res) => {
                 )
                 .query(query);
 
-        if (
-            result.recordset.length === 0
-        ) {
+        if (result.recordset.length === 0) {
 
             return res.status(404).json({
-
                 success: false,
-
-                message:
-                    "Travel story not found."
-
+                message: "Travel story not found."
             });
 
         }
 
         res.json({
-
             success: true,
-
-            story:
-                result.recordset[0]
-
+            story: result.recordset[0]
         });
 
     } catch (error) {
@@ -168,12 +151,8 @@ app.get("/api/stories/:id", async (req, res) => {
         );
 
         res.status(500).json({
-
             success: false,
-
-            message:
-                "Unable to load the travel story."
-
+            message: "Unable to load the travel story."
         });
 
     }
@@ -217,12 +196,8 @@ app.post("/api/stories", async (req, res) => {
         ) {
 
             return res.status(400).json({
-
                 success: false,
-
-                message:
-                    "Please fill all required fields."
-
+                message: "Please fill all required fields."
             });
 
         }
@@ -241,12 +216,8 @@ app.post("/api/stories", async (req, res) => {
         ) {
 
             return res.status(400).json({
-
                 success: false,
-
-                message:
-                    "Please enter a valid travel cost."
-
+                message: "Please enter a valid travel cost."
             });
 
         }
@@ -269,7 +240,7 @@ app.post("/api/stories", async (req, res) => {
         // ---------------------------------------------
 
         const query =
-            "INSERT INTO Stories " +
+            "INSERT INTO dbo.Stories " +
             "(Id, Title, StartPlace, Destination, Transport, Cost, Route, Experience, Tips) " +
             "VALUES " +
             "(@Id, @Title, @StartPlace, @Destination, @Transport, @Cost, @Route, @Experience, @Tips)";
@@ -386,12 +357,8 @@ app.post("/api/stories", async (req, res) => {
         );
 
         res.status(500).json({
-
             success: false,
-
-            message:
-                "Unable to save the travel story."
-
+            message: "Unable to save the travel story."
         });
 
     }
@@ -418,12 +385,8 @@ app.put("/api/stories/:id", async (req, res) => {
         if (!Number.isFinite(id)) {
 
             return res.status(400).json({
-
                 success: false,
-
-                message:
-                    "Invalid story ID."
-
+                message: "Invalid story ID."
             });
 
         }
@@ -457,12 +420,8 @@ app.put("/api/stories/:id", async (req, res) => {
         ) {
 
             return res.status(400).json({
-
                 success: false,
-
-                message:
-                    "Please fill all required fields."
-
+                message: "Please fill all required fields."
             });
 
         }
@@ -481,12 +440,8 @@ app.put("/api/stories/:id", async (req, res) => {
         ) {
 
             return res.status(400).json({
-
                 success: false,
-
-                message:
-                    "Please enter a valid travel cost."
-
+                message: "Please enter a valid travel cost."
             });
 
         }
@@ -501,7 +456,7 @@ app.put("/api/stories/:id", async (req, res) => {
         // ---------------------------------------------
 
         const query =
-            "UPDATE Stories SET " +
+            "UPDATE dbo.Stories SET " +
             "Title = @Title, " +
             "StartPlace = @StartPlace, " +
             "Destination = @Destination, " +
@@ -585,12 +540,8 @@ app.put("/api/stories/:id", async (req, res) => {
         ) {
 
             return res.status(404).json({
-
                 success: false,
-
-                message:
-                    "Travel story not found."
-
+                message: "Travel story not found."
             });
 
         }
@@ -649,12 +600,8 @@ app.put("/api/stories/:id", async (req, res) => {
         );
 
         res.status(500).json({
-
             success: false,
-
-            message:
-                "Unable to update the travel story."
-
+            message: "Unable to update the travel story."
         });
 
     }
@@ -677,12 +624,8 @@ app.delete("/api/stories/:id", async (req, res) => {
         if (!Number.isFinite(id)) {
 
             return res.status(400).json({
-
                 success: false,
-
-                message:
-                    "Invalid story ID."
-
+                message: "Invalid story ID."
             });
 
         }
@@ -693,7 +636,7 @@ app.delete("/api/stories/:id", async (req, res) => {
 
 
         const query =
-            "DELETE FROM Stories WHERE Id = @Id";
+            "DELETE FROM dbo.Stories WHERE Id = @Id";
 
 
         const result =
@@ -714,24 +657,16 @@ app.delete("/api/stories/:id", async (req, res) => {
         ) {
 
             return res.status(404).json({
-
                 success: false,
-
-                message:
-                    "Travel story not found."
-
+                message: "Travel story not found."
             });
 
         }
 
 
         res.json({
-
             success: true,
-
-            message:
-                "Travel story deleted successfully."
-
+            message: "Travel story deleted successfully."
         });
 
     } catch (error) {
@@ -742,12 +677,8 @@ app.delete("/api/stories/:id", async (req, res) => {
         );
 
         res.status(500).json({
-
             success: false,
-
-            message:
-                "Unable to delete the travel story."
-
+            message: "Unable to delete the travel story."
         });
 
     }
@@ -762,12 +693,8 @@ app.delete("/api/stories/:id", async (req, res) => {
 app.use((req, res) => {
 
     res.status(404).json({
-
         success: false,
-
-        message:
-            "TravelStories API endpoint not found."
-
+        message: "TravelStories API endpoint not found."
     });
 
 });
@@ -843,3 +770,4 @@ async function startServer() {
 
 
 startServer();
+
