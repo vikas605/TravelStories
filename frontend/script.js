@@ -1,4 +1,4 @@
-const API_URL = "https://travelstories-backend.onrender.com/api/stories";
+﻿const API_URL = "https://travelstories-api.onrender.com/api/stories";
 
 // =====================================================
 // CREATE / PUBLISH STORY
@@ -630,7 +630,7 @@ function renderStories(
                 </span>
 
                 <strong>
-                    ₹${Number(
+                    â‚¹${Number(
                         story.cost || 0
                     ).toLocaleString("en-IN")}
                 </strong>
@@ -645,12 +645,12 @@ function renderStories(
 
             <p>
 
-                📍
+                ðŸ“
                 ${escapeHTML(
                     story.start
                 )}
 
-                →
+                â†’
 
                 ${escapeHTML(
                     story.destination
@@ -673,7 +673,7 @@ function renderStories(
                 type="button"
                 onclick="viewStory(${Number(story.id)})"
             >
-                Read Story →
+                Read Story â†’
             </button>
 
         `;
