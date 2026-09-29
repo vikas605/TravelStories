@@ -1,4 +1,5 @@
-﻿const API_URL = "https://travelstories-api.onrender.com/api/stories";
+﻿
+const API_URL = "https://travelstories-backend.onrender.com/api/stories";
 
 // =====================================================
 // CREATE / PUBLISH STORY
@@ -545,7 +546,11 @@ async function clearSearch() {
 
 function viewStory(id) {
 
-    if (!id) {
+    if (
+        id === null ||
+        id === undefined ||
+        String(id).trim() === ""
+    ) {
 
         console.error(
             "Invalid story ID:",
@@ -555,14 +560,16 @@ function viewStory(id) {
         return;
     }
 
+    const storyId = String(id).trim();
+
     console.log(
         "Opening story:",
-        id
+        storyId
     );
 
     window.location.href =
         "story.html?id=" +
-        encodeURIComponent(id);
+        encodeURIComponent(storyId);
 
 }
 
@@ -619,6 +626,13 @@ function renderStories(
         card.className =
             "story-card";
 
+        /*
+         * Story IDs are kept as strings.
+         * We do NOT use Number(story.id).
+         */
+        const storyId =
+            String(story.id ?? "").trim();
+
         card.innerHTML = `
 
             <div class="story-card-top">
@@ -630,7 +644,7 @@ function renderStories(
                 </span>
 
                 <strong>
-                    â‚¹${Number(
+                    ₹${Number(
                         story.cost || 0
                     ).toLocaleString("en-IN")}
                 </strong>
@@ -645,12 +659,12 @@ function renderStories(
 
             <p>
 
-                ðŸ“
+                📍
                 ${escapeHTML(
                     story.start
                 )}
 
-                â†’
+                →
 
                 ${escapeHTML(
                     story.destination
@@ -671,9 +685,9 @@ function renderStories(
 
             <button
                 type="button"
-                onclick="viewStory(${Number(story.id)})"
+                onclick="viewStory('${escapeHTML(storyId)}')"
             >
-                Read Story â†’
+                Read Story →
             </button>
 
         `;
@@ -824,4 +838,5 @@ function escapeHTML(value) {
             "&#039;"
         );
 
-}
+            }
+
