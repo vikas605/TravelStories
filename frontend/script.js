@@ -560,7 +560,8 @@ function viewStory(id) {
         return;
     }
 
-    const storyId = String(id).trim();
+    const storyId =
+        String(id).trim();
 
     console.log(
         "Opening story:",
@@ -627,20 +628,25 @@ function renderStories(
             "story-card";
 
         /*
-         * Story IDs are kept as strings.
-         * We do NOT use Number(story.id).
+         * Keep story IDs as strings.
+         * Do NOT convert story.id to Number.
          */
         const storyId =
             String(story.id ?? "").trim();
+
+        /*
+         * Convert transport text into
+         * proper icons and readable text.
+         */
+        const transportDisplay =
+            getTransportIcon(story.transport);
 
         card.innerHTML = `
 
             <div class="story-card-top">
 
                 <span>
-                    ${escapeHTML(
-                        story.transport
-                    )}
+                    ${transportDisplay}
                 </span>
 
                 <strong>
@@ -695,6 +701,132 @@ function renderStories(
         container.appendChild(card);
 
     });
+
+}
+
+
+// =====================================================
+// TRANSPORT ICON
+// =====================================================
+
+function getTransportIcon(transport) {
+
+    const value =
+        String(transport || "")
+            .toLowerCase()
+            .trim();
+
+    /*
+     * Handle Bus + Train first.
+     */
+    if (
+        value.includes("bus") &&
+        value.includes("train")
+    ) {
+
+        return "🚌 Bus + 🚆 Train";
+
+    }
+
+    /*
+     * Bus
+     */
+    if (
+        value.includes("bus")
+    ) {
+
+        return "🚌 Bus";
+
+    }
+
+    /*
+     * Train
+     */
+    if (
+        value.includes("train")
+    ) {
+
+        return "🚆 Train";
+
+    }
+
+    /*
+     * Bike / Motorcycle
+     */
+    if (
+        value.includes("bike") ||
+        value.includes("bicycle") ||
+        value.includes("motorcycle")
+    ) {
+
+        return "🏍️ Bike";
+
+    }
+
+    /*
+     * Car
+     */
+    if (
+        value.includes("car")
+    ) {
+
+        return "🚗 Car";
+
+    }
+
+    /*
+     * Flight / Plane
+     */
+    if (
+        value.includes("flight") ||
+        value.includes("plane")
+    ) {
+
+        return "✈️ Flight";
+
+    }
+
+    /*
+     * Auto / Rickshaw
+     */
+    if (
+        value.includes("auto") ||
+        value.includes("rickshaw")
+    ) {
+
+        return "🛺 Auto";
+
+    }
+
+    /*
+     * Taxi / Cab
+     */
+    if (
+        value.includes("taxi") ||
+        value.includes("cab")
+    ) {
+
+        return "🚕 Taxi";
+
+    }
+
+    /*
+     * Walking
+     */
+    if (
+        value.includes("walk") ||
+        value.includes("walking")
+    ) {
+
+        return "🚶 Walking";
+
+    }
+
+    /*
+     * If transport is unknown,
+     * safely display original value.
+     */
+    return escapeHTML(transport);
 
 }
 
@@ -838,5 +970,4 @@ function escapeHTML(value) {
             "&#039;"
         );
 
-            }
-
+}
